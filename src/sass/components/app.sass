@@ -1,0 +1,82 @@
+@import 'components/_navbar.sass'
+
+$rem-base: 16px
+
+html
+  font-size: 100%
+  -webkit-font-smoothing: antialiased
+body 
+  font-size: 16px
+  font-size: 1rem 
+  line-height: 1
+  margin: 0
+  font-family: Roboto
+button
+  cursor: pointer
+// Start Spinner
+.submit-spinner-height
+  height: 1.5rem
+
+.submit-spinner
+  margin: auto
+  font-size: 1.5rem
+  position: relative
+  text-indent: -9999em
+  border-top: 2px solid grey
+  border-right: 2px solid grey
+  border-bottom: 2px solid grey
+  border-left: 2px solid black
+  -webkit-transform: translateZ(0)
+  -ms-transform: translateZ(0)
+  transform: translateZ(0)
+  -webkit-animation: loader .6s infinite linear
+  animation: loader .6s infinite linear
+  &.center
+    position: fixed
+    top: calc(50% - 1rem)
+    left: calc(50% - 1rem)
+  &.top
+    margin-top: 40px
+    left: 50%
+
+.center-content
+  display: flex
+  justify-content: center
+  flex-direction: column
+  align-items: center
+
+.submit-spinner, .submit-spinner:after
+  border-radius: 50%
+  width: 1.5rem
+  height: 1.5rem
+
+.submit-spinner
+  left: 55% !important
+.transaction-spinner
+  left: 0 !important
+  margin-top: 24px
+//End Spinner
+
+.loader
+  width: 240px
+
+.fade-in 
+	-webkit-animation: fade-in 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both
+	        animation: fade-in 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both
+
+@-webkit-keyframes fade-in
+  0% 
+    opacity: 0
+  
+  100% 
+    opacity: 1
+
+@keyframes fade-in
+  0% 
+    opacity: 0
+  
+  100% 
+    opacity: 1
+  
+.bold-text
+  font-weight: 700
