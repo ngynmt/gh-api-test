@@ -8,11 +8,11 @@ class NavBar extends Component {
   }
 
   render() {
-    const { navigation, selectPage, createNewPage } = this.props;
+    const { navigation, selectPage, createNewPage, selectedPage } = this.props;
     return (
-      <div className="navbar">
+      <div className="sidebar">
         {navigation.map((section, idx) => {
-          const pages = section.pages.map((page, pageIdx) => <p key={`page-${pageIdx}`}>{page.title}</p>);
+          const pages = section.pages.map((page, pageIdx) => <p key={`page-${pageIdx}`} style={selectedPage.title === page.title ? { fontWeight: 'bold' } : {}}>{page.title}</p>);
           return (
             <div key={`section-${idx}`}>
               <div className="header-container">
@@ -30,7 +30,8 @@ class NavBar extends Component {
 
 function mapStateToProps(state) {
   return {
-    navigation: state.pagesReducer.navigation
+    navigation: state.pagesReducer.navigation,
+    selectedPage: state.pagesReducer.selectedPage
   };
 }
 

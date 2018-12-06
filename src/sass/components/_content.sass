@@ -1,0 +1,96 @@
+.content-container
+  min-height: 100vh
+  padding: 37px 38px 80px
+  display: flex
+  justify-content: space-between
+
+.md-content
+  p:nth-of-type(1)
+    color: #818181
+
+  p
+    a
+      color: #333333
+  h1
+    font-family: Catamaran
+    font-size: 2.75rem
+
+  h2
+    font-family: Khula
+    font-size: 1.875rem
+
+  li
+    list-style: none
+
+  span
+    li
+      float: right
+      margin-bottom: 0.5rem
+
+  li::before 
+    content: "\2022"
+    color: #c6254e
+    font-weight: bold
+    display: inline-block
+    width: 0.4375
+    padding-right: 5px
+
+  code
+    background-color: #f9f2f4
+    color: #c6254e
+    line-height: 1.5rem
+    padding: 0 6px
+    font-size: 1rem
+    font-family: Khula
+
+  blockquote
+    background: #f4f8fa
+    padding: 1.375rem 1.625rem 1.1875rem
+    border-left: 10px #0e1111 solid
+    margin: 1.875rem auto
+    p
+      color: #333333 !important
+    p:nth-of-type(1)
+      color: #0e1111
+      display: inline
+      padding-left: 10px
+      vertical-align: super
+
+  blockquote::before
+    content: url(https://s3-us-west-1.amazonaws.com/synapse-banking-qa/assets/ToolTip_icon.svg)
+    display: inline
+    padding-right: 5px
+
+  // table
+  table
+    border-collapse: collapse
+    width: 100%
+    margin: 1.875rem auto
+    border: 1px solid #0e1111
+
+  th
+    font-family: Khula
+    font-size: 1rem
+    font-weight: 600
+    text-align: left
+    color: #ffffff
+    background-color: #0e1111
+    padding: 0 1rem
+  th:nth-of-type(3)
+    width: 35%
+  td
+    padding: 0 1rem
+  td:nth-of-type(3)
+    width: 35%
+  tr
+    height: 6.25rem
+    
+  tr:nth-child(even)
+    background-color: #f7f7f7
+
+  thead
+    tr
+      height: 3.375rem
+
+.preview-container
+  width: 49%

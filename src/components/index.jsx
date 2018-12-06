@@ -14,7 +14,7 @@ import {
 // COMPONENTS
 import Main from './Main';
 import Authenticate from './Authenticate';
-import Edit from './Edit';
+import Edit from './edit/Edit';
 import Review from './Review';
 import Success from './Success';
 
@@ -38,14 +38,14 @@ history.listen((location) => {
 // main routes are here, sub-routes are in their respective container components
 export default (
   <Router history={history}>
-    <div>
-      <Switch>
-        <Route exact path={MAIN_LINK} component={Authenticate} />
-        {/* <Route path={AUTH_LINK} component={Authenticate} /> */}
-        <Route path={EDIT_LINK} component={Edit} />
-        <Route path={REVIEW_LINK} component={Review} />
-        <Route path={SUCCESS_LINK} component={Success} />
-      </Switch>
-    </div>
+    {/* <div> */}
+    <Switch>
+      <Route exact path={MAIN_LINK} component={Authenticate} />
+      {/* <Route path={AUTH_LINK} component={Authenticate} /> */}
+      <Route path={EDIT_LINK} component={Edit} />
+      <Route path={REVIEW_LINK} component={Review} />
+      <Route path={SUCCESS_LINK} component={Success} />
+    </Switch>
+    {/* </div> */}
   </Router>
 );
