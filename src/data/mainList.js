@@ -1,6 +1,6 @@
-// import APIInitialization from '../markdown-content/Resources/api-initialization';
-// import APIInitialization3 from '../markdown-content/Resources/api-initialization-3';
-// import APIInitializationCodeBlock from '../markdown-content/Resources/api-initialization-cb';
+import APIInitialization from './content/Resources/api-initialization';
+import APIInitialization3 from './content/Resources/api-initialization-3';
+import APIInitializationCodeBlock from './content/Resources/api-initialization-cb';
 
 export default [{
   header: 'Introduction', // name of section header
@@ -14,15 +14,15 @@ export default [{
     components: [ // array of components to be rendered on page. will render in the order that it is passed
       {
         type: 'MARKDOWN', // can be 'MARKDOWN' or 'CODEBLOCK'
-        // content: APIInitialization // file in /src/markdown-content that has specific content (REMEMBER TO IMPORT ON TOP)
+        content: APIInitialization // file in /src/markdown-content that has specific content (REMEMBER TO IMPORT ON TOP)
       },
       {
         type: 'CODEBLOCK',
-        // content: APIInitializationCodeBlock
+        content: APIInitializationCodeBlock
       },
       {
         type: 'MARKDOWN',
-        // content: APIInitialization3
+        content: APIInitialization3
       },
     ]
   },

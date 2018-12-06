@@ -3,6 +3,7 @@ import navigation from '../data/mainList';
 
 const initialState = {
   navigation,
+  selectedPage: navigation[1].pages[0], // select "API Initialization" for now
   pages: []
 };
 

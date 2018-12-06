@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 // import Navbar from './NavBar';
@@ -13,10 +13,10 @@ class Main extends Component {
   render() {
     const { children } = this.props;
     return (
-      <div>
+      <Fragment>
         {/* <Navbar /> */}
         {children}
-      </div>
+      </Fragment>
     );
   }
 }
