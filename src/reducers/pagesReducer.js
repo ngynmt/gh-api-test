@@ -5,7 +5,7 @@ import {
   SAVE_CHANGES,
   UPDATE_NAV,
   UPDATE_PAGES,
-  UPDATE_CODEBLOCK_TAB
+  UPDATE_COMPONENT_CONTENT
 } from '../constants/actionConstants';
 import navigation from '../data/mainList';
 
@@ -14,14 +14,9 @@ const initialState = {
   selectedPage: navigation[1].pages[0], // select "API Initialization" for now
   selectedHeader: navigation[1].header,
   selectedComponent: {
-    type: 'CODEBLOCK',
+    type: 'MARKDOWN',
     index: 3,
-    content: [
-      {
-        language: 'javascript',
-        snippet: ''
-      }
-    ]
+    content: '## something'
   },
   pages: []
 };
@@ -44,7 +39,7 @@ export default (state = initialState, action) => {
         ...state,
         selectedComponent: action.payload
       };
-    case UPDATE_CODEBLOCK_TAB:
+    case UPDATE_COMPONENT_CONTENT:
       return {
         ...state,
         selectedComponent: {

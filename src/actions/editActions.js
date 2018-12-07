@@ -3,7 +3,7 @@ import {
   UPDATE_PAGE_COMPONENT,
   UPDATE_PAGE_SELECTED,
   SAVE_CHANGES,
-  UPDATE_CODEBLOCK_TAB
+  UPDATE_COMPONENT_CONTENT
 } from '../constants/actionConstants';
 
 export function updatePageSelected(page) {
@@ -30,10 +30,10 @@ export function updatePageComponent(content) {
   });
 }
 
-export function updateCodeBlockTab(content) {
+export function updateComponentContent(content) {
   // update component content in real time
   return ({
-    type: UPDATE_CODEBLOCK_TAB,
+    type: UPDATE_COMPONENT_CONTENT,
     payload: content
   });
 }

@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import ReactMDE from 'react-mde';
+// import 'react-mde/lib/styles/css/react-mde-all.css';
 import _ from 'lodash';
-import { updatePageComponent, updateCodeBlockTab } from '../../../actions/editActions';
+import { updatePageComponent, updateComponentContent } from '../../../actions/editActions';
 
 class Editor extends Component {
   constructor(props) {
@@ -11,7 +13,18 @@ class Editor extends Component {
   }
 
   renderMarkdownEditor = () => {
-    // TODO
+    const { selectedComponent } = this.props;
+    return (
+      <ReactMDE
+        onChange={_.flowRight(_.debounce(e => this.updateMarkdown(e), 1000, { leading: false, trailing: true }), _.property('target.value'))}
+        value={selectedComponent.content}
+      />
+    );
+  }
+
+  updateMarkdown = (e) => {
+    const { props } = this;
+    props.updateComponentContent(e);
   }
 
   handleLanguageChange = (e, idx) => {
@@ -24,7 +37,7 @@ class Editor extends Component {
       language: e.target.value,
       snippet
     });
-    props.updateCodeBlockTab(newContent);
+    props.updateComponentContent(newContent);
   }
 
   updateSnippet = (e, idx) => {
@@ -37,7 +50,7 @@ class Editor extends Component {
       snippet: e,
       language
     });
-    props.updateCodeBlockTab(newContent);
+    props.updateComponentContent(newContent);
   }
 
   addTab = () => {
@@ -49,7 +62,7 @@ class Editor extends Component {
       language: 'javascript',
       snippet: ''
     });
-    props.updateCodeBlockTab(newContent);
+    props.updateComponentContent(newContent);
   }
 
   removeTab = (idx) => {
@@ -58,7 +71,7 @@ class Editor extends Component {
     const { selectedComponent } = this.props;
     const newContent = selectedComponent.content;
     newContent.splice(idx, 1);
-    props.updateCodeBlockTab(newContent);
+    props.updateComponentContent(newContent);
   }
 
   renderCodeblockEditor = () => {
@@ -109,4 +122,4 @@ function mapStateToProps(state) {
 }
 
 
-export default withRouter(connect(mapStateToProps, { updatePageComponent, updateCodeBlockTab })(Editor));
+export default withRouter(connect(mapStateToProps, { updatePageComponent, updateComponentContent })(Editor));
