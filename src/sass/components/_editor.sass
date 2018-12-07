@@ -1,7 +1,35 @@
 .editor-container
-  width: 49%
+  width: 48%
   border: 1px solid black
   height: inherit
   display: flex
   justify-content: center
-  // align-items: center
+  padding: 5px 10px
+  .codeblock-editor
+    display: flex
+    flex-direction: column
+    width: 100%
+    .codeblock-editor-tab
+      padding: 5px 10px
+      background: #EEE
+      margin: 5px 0
+      label
+        display: flex
+        flex-direction: column
+        margin: 5px auto
+        select
+          margin: 5px 0 10px
+        textarea
+          margin-top: 5px
+          resize: vertical
+    .codeblock-add-tab
+      padding: 7px 0 5px
+      margin: 5px auto
+      background: #EEE
+      width: 100%
+      text-align: center
+      cursor: pointer
+    .codeblock-remove-tab
+      float: right
+      cursor: pointer
+
