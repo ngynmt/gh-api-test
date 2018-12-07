@@ -1,28 +1,67 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Accordion, List } from 'semantic-ui-react';
+import _ from 'lodash';
+
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      activeIndex: 0
+    };
+  }
+
+  handleClick = ({ index }) => {
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+    this.setState({ activeIndex: newIndex });
   }
 
   render() {
-    const { navigation, selectPage, createNewPage, selectedPage } = this.props;
+    const { activeIndex } = this.state;
+    const { navigation, selectPage, createNewPage, selectedItem } = this.props;
+    console.log('props', this);
     return (
       <div className="sidebar">
-        {navigation.map((section, idx) => {
-          const pages = section.pages.map((page, pageIdx) => <p key={`page-${pageIdx}`} style={selectedPage.title === page.title ? { fontWeight: 'bold' } : {}}>{page.title}</p>);
-          return (
-            <div key={`section-${idx}`}>
-              <div className="header-container">
-                <p>{section.header}</p>
-                <div className="add-new-button" onClick={() => createNewPage(section.header)} onKeyPress={() => createNewPage(section.header)}>+</div>
+        {
+          navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
+            const pages = section.pages.map((page, pageIdx) => (
+              <div key={`page-${pageIdx}`}>
+                <span className={page.title === selectedItem ? 'activeSubItem' : 'subItem'} onClick={() => selectPage(section, page)} onKeyPress={() => selectPage(section, page)}>
+                  {page.title}
+                </span>
+                <br />
               </div>
-              <div onClick={() => selectPage(section.header)} onKeyPress={() => selectPage(section.header)}>{pages}</div>
-            </div>
-          );
-        })}
+            ));
+
+            const newPage = (
+              <div key={`page-${section.pages.length}`}>
+                <span className="add-new-button" style={{ color: 'green' }} onClick={() => createNewPage(section.header)} onKeyPress={() => createNewPage(section.header)}>
+                  + Add A Page
+                </span>
+                <br />
+              </div>
+            );
+
+            pages.push(newPage);
+            return (
+              <Accordion key={`section-${idx}`}>
+                <List.Item>
+                  <Accordion.Title
+                    active={activeIndex === idx}
+                    content={section.header}
+                    route={section.route}
+                    subItem={section.pages[0]}
+                    index={idx}
+                    onClick={this.handleClick}
+                    icon="dropdown"
+                  />
+                  <Accordion.Content active={activeIndex === idx} content={pages} />
+                </List.Item>
+              </Accordion>
+            );
+          })}
       </div>
     );
   }
