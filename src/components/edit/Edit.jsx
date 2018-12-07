@@ -72,7 +72,7 @@ class Edit extends Component {
       .catch(err => console.log(err, err.message, err.config, err.code, err.request, err.response, 'err'));
   }
 
-  selectPage = (page) => {
+  selectPage = (section, page) => {
     this.setState({ selectedItem: page });
   }
 
@@ -90,16 +90,16 @@ class Edit extends Component {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  submitChanges = () => {}
+  submitChanges = () => { }
 
   render() {
     const { selectedItem, content } = this.state;
     return (
       <div>
-        <NavBar selectPage={this.selectPage} createNewPage={this.createNewPage} />
+        <NavBar selectPage={this.selectPage} createNewPage={this.createNewPage} selectedItem={selectedItem ? selectedItem.title : null} />
         <div className="content-container">
           {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
-          <Editor />
+          <Editor selectedItem={selectedItem} />
           <Preview />
         </div>
       </div>
