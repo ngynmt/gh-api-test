@@ -36,7 +36,7 @@ class Edit extends Component {
     };
     const cert = PrivateKey.PRIVATE_KEY; // fs.readFileSync(keys);
     const token = jwt.sign(payload, cert, { algorithm: 'RS256' });
-    this.setState({ token }, () => this.getContent());
+    // this.setState({ token }, () => this.getContent());
   }
 
   getContent = () => {
