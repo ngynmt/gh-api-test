@@ -72,9 +72,6 @@ class Edit extends Component {
       .catch(err => console.log(err, err.message, err.config, err.code, err.request, err.response, 'err'));
   }
 
-  selectPage = (section, page) => {
-    this.setState({ selectedItem: page });
-  }
 
   createNewPage = () => {
     // todo
@@ -96,10 +93,10 @@ class Edit extends Component {
     const { selectedItem, content } = this.state;
     return (
       <div>
-        <NavBar selectPage={this.selectPage} createNewPage={this.createNewPage} selectedItem={selectedItem ? selectedItem.title : null} />
+        <NavBar createNewPage={this.createNewPage} />
         <div className="content-container">
           {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
-          <Editor selectedItem={selectedItem} />
+          <Editor />
           <Preview />
         </div>
       </div>

@@ -6,11 +6,14 @@ import {
   UPDATE_CODEBLOCK_TAB
 } from '../constants/actionConstants';
 
-export function updatePageSelected(page) {
+export function updatePageSelected(section, page) {
   // select the correct page to edit
   return ({
     type: UPDATE_PAGE_SELECTED,
-    payload: page
+    payload: {
+      section,
+      page
+    }
   });
 }
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Accordion, List } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import { updatePageSelected } from '../actions/editActions';
 
 class NavBar extends Component {
   constructor(props) {
@@ -20,15 +21,14 @@ class NavBar extends Component {
 
   render() {
     const { activeIndex } = this.state;
-    const { navigation, selectPage, createNewPage, selectedItem } = this.props;
-    console.log('props', this);
+    const { props, props: { navigation, selectedPage, createNewPage } } = this;
     return (
       <div className="sidebar">
         {
           navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
             const pages = section.pages.map((page, pageIdx) => (
               <div key={`page-${pageIdx}`}>
-                <span className={page.title === selectedItem ? 'activeSubItem' : 'subItem'} onClick={() => selectPage(section, page)} onKeyPress={() => selectPage(section, page)}>
+                <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={() => props.updatePageSelected(section, page)} onKeyPress={() => props.updatePageSelected(section, page)}>
                   {page.title}
                 </span>
                 <br />
@@ -74,4 +74,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {})(NavBar);
+export default connect(mapStateToProps, { updatePageSelected })(NavBar);
