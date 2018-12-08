@@ -9,7 +9,8 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeIndex: 0
+      activeIndex: 0,
+      navButtonTxt: 'Close'
     };
   }
 
@@ -19,11 +20,23 @@ class NavBar extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
+  toggleNav = () => {
+    const { navButtonTxt } = this.state;
+    if (navButtonTxt === 'Close') {
+      this.setState({ navButtonTxt: 'Open' });
+      document.getElementsByClassName('sidebar')[0].style.width = '2.5rem';
+    } else {
+      this.setState({ navButtonTxt: 'Close' });
+      document.getElementsByClassName('sidebar')[0].style.width = '14rem';
+    }
+  }
+
   render() {
-    const { activeIndex } = this.state;
+    const { activeIndex, navButtonTxt } = this.state;
     const { props, props: { navigation, selectedPage, createNewPage } } = this;
     return (
       <div className="sidebar">
+        <button type="button" onClick={this.toggleNav}>{navButtonTxt}</button>
         {
           navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
             const pages = section.pages.map((page, pageIdx) => (
