@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Modal = ({ closeOptions, children, classModal, modalStyle }) => {
+const Modal = ({ closeModal, children, classModal, modalStyle }) => {
   // CHANGES HEIGHT OF MODAL WHEN SCROLLING
   const containerHeight = document.getElementsByClassName('dashboard-container')[0].offsetHeight;
   const style = `${containerHeight + 2000}px`;
@@ -9,7 +9,7 @@ const Modal = ({ closeOptions, children, classModal, modalStyle }) => {
   }
   const closeIt = document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' || event.keyCode === 27) {
-      closeOptions();
+      closeModal();
       document.removeEventListener('keydown', closeIt);
     }
   });
@@ -25,8 +25,8 @@ const Modal = ({ closeOptions, children, classModal, modalStyle }) => {
               : (
                 <div
                   className="close"
-                  onClick={closeOptions}
-                  onKeyPress={closeOptions}
+                  onClick={closeModal}
+                  onKeyPress={closeModal}
                 />
               )
             }
@@ -35,7 +35,7 @@ const Modal = ({ closeOptions, children, classModal, modalStyle }) => {
             </div>
           </div>
         </div>
-        <div className="coverAll-Dark" onClick={closeOptions} onKeyPress={closeOptions} style={{ visibility: 'visible', top: 0, height: style }} />
+        <div className="coverAll-Dark" onClick={closeModal} onKeyPress={closeModal} style={{ visibility: 'visible', top: 0, height: style }} />
       </div>
     </div>
   );
