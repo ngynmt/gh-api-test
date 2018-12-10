@@ -2,7 +2,7 @@ import React from 'react';
 
 const Modal = ({ closeModal, children, classModal, modalStyle }) => {
   // CHANGES HEIGHT OF MODAL WHEN SCROLLING
-  const containerHeight = document.getElementsByClassName('dashboard-container')[0].offsetHeight;
+  const containerHeight = document.getElementsByClassName('content-container')[0].offsetHeight;
   const style = `${containerHeight + 2000}px`;
   if (classModal) {
     document.getElementsByTagName('body')[0].style.overflow = 'hidden';
