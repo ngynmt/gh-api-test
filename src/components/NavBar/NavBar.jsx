@@ -102,12 +102,20 @@ class NavBar extends Component {
       })
     );
 
+    accordionList.unshift(
+      <List.Item key="section-x">
+        <Accordion.Title
+          style={{ color: 'green', cursor: 'pointer' }}
+          content="+ Add A Section"
+          index="section-x"
+          onClick={() => this.openModal('add section')}
+        />
+      </List.Item>
+    );
+
     return (
       <div className="sidebar">
-        <div className="close" onClick={this.collapseNav} onKeyPress={this.collapseNav} style={{ top: '0' }} />
-        <span className="add-new-button" style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.openModal('add section')} onKeyPress={() => this.openModal('add section')}>
-          + Add A Section
-        </span>
+        <div className="close" onClick={this.collapseNav} onKeyPress={this.collapseNav} style={{ top: '0', right: '15px' }} />
         <Accordion>
           {accordionList}
         </Accordion>
