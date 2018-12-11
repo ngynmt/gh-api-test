@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Editor } from 'slate-react';
-import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 import _ from 'lodash';
 import { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab, switchComponents } from '../../../actions/editActions';

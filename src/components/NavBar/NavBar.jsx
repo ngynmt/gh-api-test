@@ -72,7 +72,6 @@ class NavBar extends Component {
   render() {
     const { activeIndex, navButtonTxt, modalOpen } = this.state;
     const { props, props: { navigation, selectedPage } } = this;
-
     const accordionList = (
       navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
         const pages = section.pages.map((page, pageIdx) => (

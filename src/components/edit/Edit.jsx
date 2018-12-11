@@ -69,11 +69,6 @@ class Edit extends Component {
       .catch(err => console.log(err, err.message, err.config, err.code, err.request, err.response, 'err'));
   }
 
-
-  createNewPage = () => {
-    // todo
-  }
-
   getParameterByName = (name, url) => {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -85,7 +80,8 @@ class Edit extends Component {
   }
 
   submitChanges = () => {
-    // todo: warning - does not persist changes
+    // todo: warning modal - does not persist changes until PR
+    // save changes to main list
     const { props } = this;
     const { selectedPage } = this.props;
     props.saveChanges(selectedPage);
