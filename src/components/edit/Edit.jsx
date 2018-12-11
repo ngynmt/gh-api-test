@@ -6,6 +6,7 @@ import PrivateKey from '../../env/privateKey';
 import keys from '../../env/clientKeys';
 // import keys from '../env/synapsefi-api-docs-3-2-editor.2018-12-05.private-key.pem';
 
+import Header from '../Header';
 import NavBar from '../NavBar/NavBar';
 import EditorContainer from './components/EditorContainer';
 import Preview from './components/Preview';
@@ -71,11 +72,6 @@ class Edit extends Component {
       .catch(err => console.log(err, err.message, err.config, err.code, err.request, err.response, 'err'));
   }
 
-
-  createNewPage = () => {
-    // todo
-  }
-
   getParameterByName = (name, url) => {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -92,11 +88,14 @@ class Edit extends Component {
     const { selectedItem, content } = this.state;
     return (
       <div>
-        <NavBar createNewPage={this.createNewPage} />
-        <div className="content-container">
-          {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
-          <EditorContainer selectedItem={selectedItem} />
-          <Preview />
+        <NavBar />
+        <div>
+          <Header className="header-content" />
+          <div className="content-container">
+            {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
+            <EditorContainer selectedItem={selectedItem} />
+            <Preview />
+          </div>
         </div>
       </div>
     );
