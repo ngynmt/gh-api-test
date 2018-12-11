@@ -17,7 +17,6 @@ class NavBar extends Component {
       modalType: null,
       section: null,
       activeIndex: 0,
-      navButtonTxt: 'Close'
     };
   }
 
@@ -27,15 +26,8 @@ class NavBar extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
-  toggleNav = () => {
-    const { navButtonTxt } = this.state;
-    if (navButtonTxt === 'Close') {
-      this.setState({ navButtonTxt: 'Open' });
-      document.getElementsByClassName('sidebar')[0].style.width = '2.5rem';
-    } else {
-      this.setState({ navButtonTxt: 'Close' });
-      document.getElementsByClassName('sidebar')[0].style.width = '14rem';
-    }
+  collapseNav = () => {
+    document.getElementsByClassName('sidebar')[0].style.width = '0';
   }
 
   openModal = (modalType, section) => {
@@ -70,7 +62,7 @@ class NavBar extends Component {
 
 
   render() {
-    const { activeIndex, navButtonTxt, modalOpen } = this.state;
+    const { activeIndex, modalOpen } = this.state;
     const { props, props: { navigation, selectedPage } } = this;
 
     const accordionList = (
@@ -112,7 +104,7 @@ class NavBar extends Component {
 
     return (
       <div className="sidebar">
-        <button type="button" onClick={this.toggleNav}>{navButtonTxt}</button>
+        <div className="close" onClick={this.collapseNav} onKeyPress={this.collapseNav} style={{ top: '0' }} />
         <span className="add-new-button" style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.openModal('add section')} onKeyPress={() => this.openModal('add section')}>
           + Add A Section
         </span>
