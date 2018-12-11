@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import PrivateKey from '../../env/privateKey';
 import keys from '../../env/clientKeys';
+import Header from '../Header';
 import NavBar from '../NavBar/NavBar';
 import { saveChanges } from '../../actions/editActions';
 import EditorContainer from './components/EditorContainer';
@@ -93,11 +94,14 @@ class Edit extends Component {
     const { editsMade, selectedPage } = this.props;
     return (
       <div>
-        <NavBar createNewPage={this.createNewPage} />
-        <div className="content-container">
-          {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
-          <EditorContainer selectedItem={selectedItem} />
-          <Preview />
+        <NavBar />
+        <div>
+          <Header className="header-content" />
+          <div className="content-container">
+            {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
+            <EditorContainer selectedItem={selectedItem} />
+            <Preview />
+          </div>
         </div>
         <div className="save-changes">
           <button type="button" style={editsMade ? {} : { display: 'none' }} onClick={() => props.saveChanges(selectedPage)} onKeyPress={() => props.saveChanges(selectedPage)}>save changes</button>

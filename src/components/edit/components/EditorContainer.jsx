@@ -31,10 +31,14 @@ class EditorContainer extends Component {
     }
   }
 
+  closeSideBar = () => {
+    document.getElementsByClassName('sidebar')[0].style.width = '0';
+  };
+
   renderMarkdownEditor = () => {
     const { value } = this.state;
     return (
-      <Editor className="md-editor" value={value} onChange={this.updateMarkdown} onKeyDown={this.onKeyDown} />
+      <Editor className="md-editor" value={value} onChange={this.updateMarkdown} onKeyDown={this.onKeyDown} onFocus={this.closeSideBar} />
     );
   }
 
@@ -94,7 +98,7 @@ class EditorContainer extends Component {
       <div className="codeblock-editor">
         {tabs && tabs.content.map((tab, idx) => (
           <div className="codeblock-editor-tab" key={`tab-${idx}-${tab.language}-${tab.content}`}>
-            { tabs.content.length > 1 ? <div className="codeblock-remove-tab" onClick={() => this.removeTab(idx)} onKeyPress={() => this.removeTab(idx)}>x</div> : null}
+            {tabs.content.length > 1 ? <div className="codeblock-remove-tab" onClick={() => this.removeTab(idx)} onKeyPress={() => this.removeTab(idx)}>x</div> : null}
             <label htmlFor={`language-${idx}`}>
               language
               <select defaultValue={tab.language} onChange={e => this.handleLanguageChange(e, idx)}>
