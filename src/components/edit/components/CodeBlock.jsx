@@ -138,7 +138,10 @@ class CodeBlock extends Component {
         <div className="codeblock-tab-container">
           {tabs.map((tab, idx) => {
             tabIdx++;
-            return <div className={`codeblock-tab ${selectedTab.language === tab.language && tabs.indexOf(selectedTab === tabIdx - 1) && selectedTab.content === tab.content ? 'codeblock-tab-selected' : null}`} key={tabIdx} onClick={() => this.updateSelectedTab(tab, idx)} onKeyPress={() => this.updateSelectedTab(tab, idx)}>{tab.language}</div>;
+            if (tab.content.length > 0) {
+              return <div className={`codeblock-tab ${selectedTab.language === tab.language && tabs.indexOf(selectedTab === tabIdx - 1) && selectedTab.content === tab.content ? 'codeblock-tab-selected' : null}`} key={tabIdx} onClick={() => this.updateSelectedTab(tab, idx)} onKeyPress={() => this.updateSelectedTab(tab, idx)}>{tab.language}</div>;
+            }
+            return null;
           })}
         </div>
         <div className="codeblock-content">

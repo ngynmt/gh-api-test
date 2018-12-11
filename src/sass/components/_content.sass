@@ -1,10 +1,11 @@
 .content-container
-  min-height: 100vh
+  min-height: 90vh
   padding: 10px 38px
   display: flex
   justify-content: space-between
 
 .md-content
+  font-size: .8rem
   p:nth-of-type(1)
     color: #818181
 
@@ -13,11 +14,11 @@
       color: #333333
   h1
     font-family: Catamaran
-    font-size: 2.75rem
+    font-size: 1.75rem
 
   h2
     font-family: Khula
-    font-size: 1.875rem
+    font-size: 1.5rem
 
   li
     list-style: none
@@ -38,9 +39,9 @@
   code
     background-color: #f9f2f4
     color: #c6254e
-    line-height: 1.5rem
+    line-height: .9rem
     padding: 0 6px
-    font-size: 1rem
+    font-size: .8rem
     font-family: Khula
 
   blockquote
@@ -70,7 +71,7 @@
 
   th
     font-family: Khula
-    font-size: 1rem
+    font-size: .8rem
     font-weight: 600
     text-align: left
     color: #ffffff
@@ -101,6 +102,7 @@
   .component-wrapper
     padding: 10px
     margin-bottom: 10px
+    min-height: 4rem
     &:hover
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3)
     .component-buttons
@@ -115,9 +117,26 @@
         &:hover
           color: #e0760b
 .add-component
-  padding: 7px 0 5px
   margin: 5px auto
-  background: #EEE
-  width: 100%
+  width: 98%
   text-align: center
   cursor: pointer
+  display: flex
+  justify-content: space-between
+  div
+    border: 1px dotted #0b75e0
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    width: 49%
+    font-size: .9rem
+    padding-top: 15px
+    border-radius: 5px
+    &:hover
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3)
+      border: 1px dotted #e0760b
+    p
+      color: #0b75e0
+      padding: 0
+      margin: 15px 0 10px

@@ -16,8 +16,8 @@ class Edit extends Component {
     super(props);
     this.state = {
       selectedItem: null,
-      content: null,
-      token: null
+      token: null,
+      editsMade: true
     };
   }
 
@@ -89,7 +89,7 @@ class Edit extends Component {
   submitChanges = () => { }
 
   render() {
-    const { selectedItem, content } = this.state;
+    const { selectedItem, editsMade } = this.state;
     return (
       <div>
         <NavBar createNewPage={this.createNewPage} />
@@ -97,6 +97,9 @@ class Edit extends Component {
           {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
           <EditorContainer selectedItem={selectedItem} />
           <Preview />
+        </div>
+        <div className="save-changes">
+          <button type="button" style={editsMade ? {} : { display: 'none' }}>save changes</button>
         </div>
       </div>
     );

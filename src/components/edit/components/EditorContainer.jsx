@@ -5,7 +5,7 @@ import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 import _ from 'lodash';
-import { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab } from '../../../actions/editActions';
+import { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab, switchComponents } from '../../../actions/editActions';
 
 class EditorContainer extends Component {
   constructor(props) {
@@ -97,7 +97,6 @@ class EditorContainer extends Component {
   renderCodeblockEditor = () => {
     const { tabs } = this.state;
     const languages = ['javascript', 'php', 'python', 'ruby'];
-    console.log(tabs, 'TABS');
     return (
       <div className="codeblock-editor">
         {tabs && tabs.content.map((tab, idx) => (
@@ -105,7 +104,7 @@ class EditorContainer extends Component {
             { tabs.content.length > 1 ? <div className="codeblock-remove-tab" onClick={() => this.removeTab(idx)} onKeyPress={() => this.removeTab(idx)}>x</div> : null}
             <label htmlFor={`language-${idx}`}>
               language
-              <select defaultValue={tabs.content[idx].language} onChange={e => this.handleLanguageChange(e, idx)}>
+              <select defaultValue={tab.language} onChange={e => this.handleLanguageChange(e, idx)}>
                 {languages.map((language, langIdx) => <option key={`${idx}-lang-${langIdx}`} value={language}>{language}</option>)}
               </select>
             </label>
@@ -151,4 +150,4 @@ function mapStateToProps(state) {
 }
 
 
-export default withRouter(connect(mapStateToProps, { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab })(EditorContainer));
+export default withRouter(connect(mapStateToProps, { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab, switchComponents })(EditorContainer));

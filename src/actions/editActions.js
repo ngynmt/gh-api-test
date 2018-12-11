@@ -7,8 +7,46 @@ import {
   UPDATE_PAGE_SELECTED,
   SAVE_CHANGES,
   UPDATED_BY,
+  EDITS_MADE,
+  ADD_COMPONENT,
+  DELETE_COMPONENT,
+  SWITCH_COMPONENTS,
   UPDATE_COMPONENT_CONTENT
 } from '../constants/actionConstants';
+
+export function editsMade(boolean) {
+  // set to true if changes were made
+  return ({
+    type: EDITS_MADE,
+    payload: boolean
+  });
+}
+
+export function addComponent(component) {
+  // add codeblock or markdown component to page
+  return ({
+    type: ADD_COMPONENT,
+    payload: component
+  });
+}
+
+export function deleteComponent(index) {
+  // delete component from page
+  return ({
+    type: DELETE_COMPONENT,
+    payload: index
+  });
+}
+
+export function switchComponents(firstIdx, secondIdx) {
+  return ({
+    type: SWITCH_COMPONENTS,
+    payload: {
+      firstIdx,
+      secondIdx
+    }
+  });
+}
 
 export function updatePageSelected(section, page) {
   // select the correct page to edit
@@ -52,7 +90,7 @@ export function updateComponentContent(content, updatedBy) {
 }
 
 export function updateCodeBlock(content, updatedBy, type, index) {
-  // deep pdate codeblock content in real time
+  // deep update codeblock content in real time
   return ({
     type: UPDATE_CODE_BLOCK,
     payload: {
