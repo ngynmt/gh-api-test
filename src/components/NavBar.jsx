@@ -21,7 +21,6 @@ class NavBar extends Component {
   render() {
     const { activeIndex } = this.state;
     const { navigation, selectPage, createNewPage, selectedItem } = this.props;
-    console.log('props', this);
     return (
       <div className="sidebar">
         {
@@ -52,7 +51,7 @@ class NavBar extends Component {
                     active={activeIndex === idx}
                     content={section.header}
                     route={section.route}
-                    subItem={section.pages[0]}
+                    subitem={section.pages[0]}
                     index={idx}
                     onClick={this.handleClick}
                     icon="dropdown"

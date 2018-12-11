@@ -94,3 +94,30 @@
 
 .preview-container
   width: 48%
+  height: fit-content
+  max-height: 95vh
+  overflow: scroll
+  padding: 1px 5px
+  .component-wrapper
+    padding: 10px
+    margin-bottom: 10px
+    &:hover
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3)
+    .component-buttons
+      float: right
+      button
+        margin-left: 10px
+        font-size: 1rem
+        font-weight: bold
+        font-family: Roboto
+        color: #0b75e0
+        border: none
+        &:hover
+          color: #e0760b
+.add-component
+  padding: 7px 0 5px
+  margin: 5px auto
+  background: #EEE
+  width: 100%
+  text-align: center
+  cursor: pointer

@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import jwt from 'jsonwebtoken';
 // import fs from 'fs';
 import axios from 'axios';
-import Markdown from 'react-markdown';
 import PrivateKey from '../../env/privateKey';
 import keys from '../../env/clientKeys';
 // import keys from '../env/synapsefi-api-docs-3-2-editor.2018-12-05.private-key.pem';
 
 import NavBar from '../NavBar';
-import Editor from './components/Editor';
+import EditorContainer from './components/EditorContainer';
 import Preview from './components/Preview';
 import { MAIN_LINK } from '../../constants/routeConstants';
 
@@ -99,7 +98,7 @@ class Edit extends Component {
         <NavBar selectPage={this.selectPage} createNewPage={this.createNewPage} selectedItem={selectedItem ? selectedItem.title : null} />
         <div className="content-container">
           {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
-          <Editor selectedItem={selectedItem} />
+          <EditorContainer selectedItem={selectedItem} />
           <Preview />
         </div>
       </div>

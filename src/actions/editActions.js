@@ -1,8 +1,12 @@
 import {
   UPDATE_COMPONENT_ORDER,
+  UPDATE_CODE_BLOCK,
+  ADD_CODE_BLOCK_TAB,
+  REMOVE_CODE_BLOCK_TAB,
   UPDATE_PAGE_COMPONENT,
   UPDATE_PAGE_SELECTED,
   SAVE_CHANGES,
+  UPDATED_BY,
   UPDATE_COMPONENT_CONTENT
 } from '../constants/actionConstants';
 
@@ -22,19 +26,60 @@ export function updateComponentOrder(components) {
   });
 }
 
-export function updatePageComponent(content) {
-  // update component content in real time
+export function updatePageComponent(component, updatedBy) {
+  // update component to edit
   return ({
     type: UPDATE_PAGE_COMPONENT,
-    payload: content
+    payload: {
+      component,
+      updatedBy
+    }
   });
 }
 
-export function updateComponentContent(content) {
+export function updateComponentContent(content, updatedBy) {
   // update component content in real time
   return ({
     type: UPDATE_COMPONENT_CONTENT,
-    payload: content
+    payload: {
+      content,
+      updatedBy
+    }
+  });
+}
+
+export function updateCodeBlock(content, updatedBy, type, index) {
+  // deep pdate codeblock content in real time
+  return ({
+    type: UPDATE_CODE_BLOCK,
+    payload: {
+      content,
+      updatedBy,
+      type,
+      index
+    }
+  });
+}
+
+export function addCodeBlockTab(tab, updatedBy) {
+  // deep pdate codeblock content in real time
+  return ({
+    type: ADD_CODE_BLOCK_TAB,
+    payload: {
+      tab,
+      updatedBy
+    }
+  });
+}
+
+export function removeCodeBlockTab(index, updatedBy) {
+  // deep pdate codeblock content in real time
+  return ({
+    type: REMOVE_CODE_BLOCK_TAB,
+    payload: {
+      index,
+      updatedBy
+    }
   });
 }
 
@@ -45,3 +90,11 @@ export function saveNewChanges(page) {
     payload: page
   });
 }
+
+// export function updatedBy(type) {
+//   // save changes to main list
+//   return ({
+//     type: UPDATED_BY,
+//     payload: type
+//   });
+// }
