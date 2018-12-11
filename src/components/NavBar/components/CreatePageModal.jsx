@@ -14,7 +14,7 @@ class CreatePageModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      section: '',
+      section: props.section,
       title: '',
       route: '',
     };
@@ -29,11 +29,11 @@ class CreatePageModal extends Component {
     };
     props.createPage(section, page); // create page
     props.updatePageSelected(section, page); // show created page in editor
+    props.closeModal();
   }
 
   render() {
-    const { closeOptions } = this.props;
-
+    const { closeModal } = this.props;
     return (
       <div className="transfer-modal-container">
         <Input
@@ -49,7 +49,7 @@ class CreatePageModal extends Component {
         <div className="create-page-modal-buttons">
           <SecondaryButton
             txt="Cancel"
-            onClick={closeOptions}
+            onClick={closeModal}
           />
           <PrimaryButton
             txt="Create Page"

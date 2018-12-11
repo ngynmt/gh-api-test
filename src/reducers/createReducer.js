@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
       };
     case CREATE_PAGE:
       for (let i = 0; i < state.navigation.length; i += 1) {
-        if (state.navigation[i].header === action.payload.section) {
+        if (state.navigation[i].header === action.payload.section.header) {
           state.navigation[i].pages.push(action.payload.page);
           break;
         }

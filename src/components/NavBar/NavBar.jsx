@@ -14,6 +14,7 @@ class NavBar extends Component {
     this.state = {
       modalOpen: false,
       modalType: null,
+      section: null,
       activeIndex: 0,
       navButtonTxt: 'Close'
     };
@@ -36,10 +37,11 @@ class NavBar extends Component {
     }
   }
 
-  openModal = (modalType) => {
+  openModal = (modalType, section) => {
     this.setState({
       modalOpen: true,
-      modalType
+      modalType,
+      section
     });
   }
 
@@ -51,14 +53,14 @@ class NavBar extends Component {
   }
 
   renderModal = () => {
-    const { modalType } = this.state;
+    const { modalType, section } = this.state;
     return (
       <Modal
         closeModal={this.closeModal}
         modalStyle={{ height: 'fit-content', paddingTop: '4rem', maxWidth: '640px', width: '100vw', maxHeight: '23.5rem' }}
       >
         {modalType === 'add page'
-          ? <CreatePageModal />
+          ? <CreatePageModal section={section} closeModal={this.closeModal} />
           : null
         }
       </Modal>
@@ -83,7 +85,7 @@ class NavBar extends Component {
 
         const newPage = (
           <div key={`page-${section.pages.length}`}>
-            <span className="add-new-button" style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.openModal('add page')} onKeyPress={() => this.openModal('add page')}>
+            <span className="add-new-button" style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.openModal('add page', section)} onKeyPress={() => this.openModal('add page', section)}>
               + Add A Page
             </span>
             <br />
