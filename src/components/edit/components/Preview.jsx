@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Markdown from 'react-markdown';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import hljs from 'highlight.js/lib/highlight';
@@ -20,10 +19,7 @@ class Preview extends Component {
   componentDidUpdate = (prevProps) => {
     const { selectedComponent, lastUpdatedBy } = this.props;
     if (lastUpdatedBy === 'EDITOR' && selectedComponent.type === 'CODEBLOCK' && prevProps.selectedComponent.content !== selectedComponent.content) {
-      this.forceUpdate();
-      // const current = document.getElementById(`codeblock-${selectedComponent.content[0].language}-${selectedComponent.content[0].content}`); // eslint-disable-line
-      // this.initializeHighlightJS(current);
-    //   selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : this.setState({ tabs: selectedComponent });
+      // this.forceUpdate();
     }
   }
 

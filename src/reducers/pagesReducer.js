@@ -32,6 +32,11 @@ export default (state = initialState, action) => {
         ...state,
         navigation: []
       };
+    case UPDATE_PAGE_SELECTED:
+      return {
+        ...state,
+        selectedPage: action.payload.page
+      };
     case UPDATE_PAGES:
       // placeholder
       return {

@@ -13,7 +13,7 @@ class EditorContainer extends Component {
     const { selectedComponent } = this.props;
     this.state = {
       value: selectedComponent.type === 'MARKDOWN' ? Plain.deserialize(selectedComponent.content) : null,
-      tabs: selectedComponent.type === 'CODEBLOCK' ? selectedComponent : null,
+      tabs: selectedComponent.type === 'CODEBLOCK' ? selectedComponent.content : null,
       editsMade: false
     };
   }
@@ -21,14 +21,14 @@ class EditorContainer extends Component {
   componentDidUpdate = (prevProps) => {
     const { selectedComponent, lastUpdatedBy } = this.props;
     if (prevProps.selectedComponent !== selectedComponent) {
+      // import selected component information only when coming from preview for markdown components
       lastUpdatedBy === 'PREVIEW' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : null;
+      // update when tabs are added/removed/modified
       this.setState({ tabs: selectedComponent });
     }
   }
 
   renderMarkdownEditor = () => {
-    const { props } = this;
-    const { selectedComponent } = this.props;
     const { value } = this.state;
     return (
       <Editor className="md-editor" value={value} onChange={this.updateMarkdown} onKeyDown={this.onKeyDown} />
@@ -42,16 +42,17 @@ class EditorContainer extends Component {
     event.preventDefault();
     // Change the value by inserting 'and' at the cursor's position.
     editor.insertText('and');
-    console.log(editor);
     return true;
   }
 
   updateMarkdown = ({ value }) => {
     const { props } = this;
     const { selectedComponent } = this.props;
+    // Plain.serialize turns the markdown dom element to a string value to store it in redux
     const plainText = Plain.serialize(value);
     this.setState({ value });
     if (selectedComponent.content !== plainText) {
+      // if updates were made, show the save changes button
       this.setState({ editsMade: true });
       props.updateComponentContent(plainText, 'EDITOR');
     }
@@ -60,13 +61,6 @@ class EditorContainer extends Component {
   handleLanguageChange = (e, idx) => {
     // updates language for specific tab on codeblock
     const { props } = this;
-    const { selectedComponent } = this.props;
-    const newContent = selectedComponent.content;
-    const snippet = selectedComponent.content[idx].content;
-    newContent.splice(idx, 1, {
-      language: e.target.value,
-      content: snippet
-    });
     this.setState({ editsMade: true });
     props.updateCodeBlock(e.target.value, 'EDITOR', 'language', idx);
   }
@@ -74,13 +68,6 @@ class EditorContainer extends Component {
   updateSnippet = (e, idx) => {
     // updates snippet for specific tab on codeblock
     const { props } = this;
-    const { selectedComponent } = this.props;
-    const newContent = selectedComponent.content;
-    const language = selectedComponent.content[idx].language;
-    newContent.splice(idx, 1, {
-      content: e,
-      language
-    });
     this.setState({ editsMade: true });
     props.updateCodeBlock(e, 'EDITOR', 'content', idx);
   }
@@ -88,8 +75,6 @@ class EditorContainer extends Component {
   addTab = () => {
     // adds a tab on codeblock
     const { props } = this;
-    const { selectedComponent } = this.props;
-    const newContent = selectedComponent.content;
     this.setState({ editsMade: true });
     props.addCodeBlockTab({
       language: 'javascript',
@@ -100,15 +85,11 @@ class EditorContainer extends Component {
   removeTab = (idx) => {
     // removes tab by index on codeblock
     const { props } = this;
-    const { selectedComponent } = this.props;
-    const newContent = selectedComponent.content;
-    // newContent.splice(idx, 1);
     this.setState({ editsMade: true });
     props.removeCodeBlockTab(idx, 'EDITOR');
   }
 
   renderCodeblockEditor = () => {
-    // const { selectedComponent } = this.props;
     const { tabs } = this.state;
     const languages = ['javascript', 'php', 'python', 'ruby'];
     return (
