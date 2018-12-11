@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   UPDATE_COMPONENT_ORDER,
   UPDATE_CODE_BLOCK,
@@ -48,13 +49,31 @@ export function switchComponents(firstIdx, secondIdx) {
   });
 }
 
-export function updatePageSelected(section, page) {
+export function updatePageSelected(section, page, index, hIndex) {
+  let firstComponent;
+  let updatedPage;
   // select the correct page to edit
+  if (page.components.length > 0) {
+    firstComponent = page.components[0];
+    firstComponent.index = 0;
+    updatedPage = page;
+  } else {
+    firstComponent = {
+      type: 'MARKDOWN',
+      index: 0,
+      content: '# Type some markdown'
+    };
+    updatedPage = _.cloneDeep(page);
+    updatedPage.components.push(firstComponent);
+  }
   return ({
     type: UPDATE_PAGE_SELECTED,
     payload: {
       section,
-      page
+      page: updatedPage,
+      index,
+      firstComponent,
+      hIndex
     }
   });
 }
@@ -124,7 +143,7 @@ export function removeCodeBlockTab(index, updatedBy) {
   });
 }
 
-export function saveNewChanges(page) {
+export function saveChanges(page) {
   // save changes to main list
   return ({
     type: SAVE_CHANGES,

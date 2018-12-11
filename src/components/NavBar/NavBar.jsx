@@ -4,6 +4,7 @@ import { Accordion, List } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import Modal from '../common/Modal';
+import CreateSectionModal from './components/CreateSectionModal';
 import CreatePageModal from './components/CreatePageModal';
 
 import { updatePageSelected } from '../../actions/editActions';
@@ -14,6 +15,7 @@ class NavBar extends Component {
     this.state = {
       modalOpen: false,
       modalType: null,
+      section: null,
       activeIndex: 0,
       navButtonTxt: 'Close'
     };
@@ -36,10 +38,11 @@ class NavBar extends Component {
     }
   }
 
-  openModal = (modalType) => {
+  openModal = (modalType, section) => {
     this.setState({
       modalOpen: true,
-      modalType
+      modalType,
+      section
     });
   }
 
@@ -51,15 +54,15 @@ class NavBar extends Component {
   }
 
   renderModal = () => {
-    const { modalType } = this.state;
+    const { modalType, section } = this.state;
     return (
       <Modal
         closeModal={this.closeModal}
         modalStyle={{ height: 'fit-content', paddingTop: '4rem', maxWidth: '640px', width: '100vw', maxHeight: '23.5rem' }}
       >
         {modalType === 'add page'
-          ? <CreatePageModal />
-          : null
+          ? <CreatePageModal section={section} closeModal={this.closeModal} />
+          : <CreateSectionModal closeModal={this.closeModal} />
         }
       </Modal>
     );
@@ -74,7 +77,7 @@ class NavBar extends Component {
       navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
         const pages = section.pages.map((page, pageIdx) => (
           <div key={`page-${pageIdx}`}>
-            <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={() => props.updatePageSelected(section, page)} onKeyPress={() => props.updatePageSelected(section, page)}>
+            <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={() => props.updatePageSelected(section, page, pageIdx, idx)} onKeyPress={() => props.updatePageSelected(section, page, pageIdx, idx)}>
               {page.title}
             </span>
             <br />
@@ -83,13 +86,12 @@ class NavBar extends Component {
 
         const newPage = (
           <div key={`page-${section.pages.length}`}>
-            <span className="add-new-button" style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.openModal('add page')} onKeyPress={() => this.openModal('add page')}>
+            <span className="add-new-button" style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.openModal('add page', section)} onKeyPress={() => this.openModal('add page', section)}>
               + Add A Page
             </span>
             <br />
           </div>
         );
-
         pages.push(newPage);
         return (
           <List.Item key={`section-${idx}`}>

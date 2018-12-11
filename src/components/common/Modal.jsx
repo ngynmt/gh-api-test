@@ -35,7 +35,7 @@ const Modal = ({ closeModal, children, classModal, modalStyle }) => {
             </div>
           </div>
         </div>
-        <div className="coverAll-Dark" onClick={closeModal} onKeyPress={closeModal} style={{ visibility: 'visible', top: 0, height: style }} />
+        <div className="coverAll-Dark" onClick={closeModal} onKeyPress={closeModal} style={{ height: style, marginLeft: 0, position: 'fixed' }} />
       </div>
     </div>
   );

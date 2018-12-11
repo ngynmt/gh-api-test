@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   UPDATE_COMPONENT_ORDER,
   UPDATE_PAGE_COMPONENT,
@@ -19,11 +20,13 @@ import navigation from '../data/mainList';
 const initialState = {
   navigation,
   selectedPage: navigation[1].pages[0], // select "API Initialization" for now
+  selectedHeaderIndex: 1,
+  selectedPageIndex: 0,
   selectedHeader: navigation[1].header,
   selectedComponent: {
     type: 'MARKDOWN',
     index: 3,
-    content: '# Start typing markdown here'
+    content: '# Type some markdown'
   },
   lastUpdatedBy: null, // 'EDITOR' or 'PREVIEW'
   pages: []
@@ -41,7 +44,19 @@ export default (state = initialState, action) => {
     case SAVE_CHANGES:
       return {
         ...state,
-        // TODO: UPDATE MAIN LIST
+        navigation: [
+          ...state.navigation.slice(0, state.selectedHeaderIndex),
+          {
+            header: state.selectedHeader.header,
+            pages: [
+              ...state.navigation[state.selectedHeaderIndex].pages.slice(0, state.selectedPageIndex),
+              action.payload,
+              ...state.navigation[state.selectedHeaderIndex].pages.slice(state.selectedPageIndex + 1)
+            ]
+          },
+          ...state.navigation.slice(state.selectedHeaderIndex + 1)
+        ],
+        editsMade: false
       };
     case UPDATE_NAV:
       return {
@@ -51,7 +66,11 @@ export default (state = initialState, action) => {
     case UPDATE_PAGE_SELECTED:
       return {
         ...state,
-        selectedPage: action.payload.page
+        selectedPage: action.payload.page,
+        selectedHeader: action.payload.section,
+        selectedPageIndex: action.payload.index,
+        selectedComponent: action.payload.firstComponent,
+        selectedHeaderIndex: action.payload.hIndex
       };
     case UPDATE_PAGES:
       // placeholder
@@ -68,7 +87,8 @@ export default (state = initialState, action) => {
             ...state.selectedPage.components,
             action.payload
           ]
-        }
+        },
+        editsMade: true
       };
     case DELETE_COMPONENT:
       return {
@@ -79,10 +99,11 @@ export default (state = initialState, action) => {
             ...state.selectedPage.components.slice(0, action.payload),
             ...state.selectedPage.components.slice(action.payload + 1)
           ]
-        }
+        },
+        editsMade: true
       };
     case SWITCH_COMPONENTS:
-      results = state.selectedPage.components.slice();
+      results = _.cloneDeep(state.selectedPage.components);
       first = state.selectedPage.components[action.payload.firstIdx];
       results[action.payload.firstIdx] = state.selectedPage.components[action.payload.secondIdx];
       results[action.payload.secondIdx] = first;
@@ -91,7 +112,8 @@ export default (state = initialState, action) => {
         selectedPage: {
           ...state.selectedPage,
           components: results
-        }
+        },
+        editsMade: true
       };
     case UPDATE_PAGE_COMPONENT:
       return {
@@ -118,7 +140,8 @@ export default (state = initialState, action) => {
             },
             ...state.selectedPage.components.slice(state.selectedComponent.index + 1)
           ]
-        }
+        },
+        editsMade: true
       };
     case UPDATE_CODE_BLOCK:
       return {
@@ -153,7 +176,8 @@ export default (state = initialState, action) => {
             },
             ...state.selectedPage.components.slice(state.selectedComponent.index + 1)
           ]
-        }
+        },
+        editsMade: true
       };
     case REMOVE_CODE_BLOCK_TAB:
       return {
@@ -172,7 +196,8 @@ export default (state = initialState, action) => {
             ...state.selectedPage.components[state.selectedComponent.index].content.slice(0, action.payload.index),
             ...state.selectedPage.components[state.selectedComponent.index].content.slice(action.payload.index + 1)
           ]
-        }
+        },
+        editsMade: true
       };
     case ADD_CODE_BLOCK_TAB:
       return {
@@ -198,7 +223,8 @@ export default (state = initialState, action) => {
               type: 'CODEBLOCK'
             }
           ]
-        }
+        },
+        editsMade: true
       };
     default:
       return state;

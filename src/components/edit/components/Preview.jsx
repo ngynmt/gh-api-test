@@ -7,7 +7,7 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import python from 'highlight.js/lib/languages/python';
 import ruby from 'highlight.js/lib/languages/ruby';
 import php from 'highlight.js/lib/languages/php';
-import { updatePageComponent, addComponent, deleteComponent, switchComponents } from '../../../actions/editActions';
+import { updatePageComponent, editsMade, addComponent, deleteComponent, switchComponents } from '../../../actions/editActions';
 import CodeBlock from './CodeBlock';
 
 class Preview extends Component {
@@ -121,4 +121,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updatePageComponent, addComponent, deleteComponent, switchComponents })(Preview);
+export default connect(mapStateToProps, { updatePageComponent, editsMade, addComponent, deleteComponent, switchComponents })(Preview);
