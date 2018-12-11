@@ -13,9 +13,14 @@ class EditorContainer extends Component {
     const { selectedComponent } = this.props;
     this.state = {
       value: selectedComponent.type === 'MARKDOWN' ? Plain.deserialize(selectedComponent.content) : null,
-      tabs: selectedComponent.type === 'CODEBLOCK' ? selectedComponent.content : null,
+      tabs: selectedComponent.type === 'CODEBLOCK' ? selectedComponent : null,
       editsMade: false
     };
+  }
+
+  componentDidMount = () => {
+    const { selectedComponent } = this.props;
+    selectedComponent.type === 'CODEBLOCK' ? this.setState({ tabs: selectedComponent }) : null;
   }
 
   componentDidUpdate = (prevProps) => {
@@ -24,7 +29,7 @@ class EditorContainer extends Component {
       // import selected component information only when coming from preview for markdown components
       lastUpdatedBy === 'PREVIEW' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : null;
       // update when tabs are added/removed/modified
-      this.setState({ tabs: selectedComponent });
+      selectedComponent.type === 'CODEBLOCK' ? this.setState({ tabs: selectedComponent }) : null;
     }
   }
 
@@ -92,6 +97,7 @@ class EditorContainer extends Component {
   renderCodeblockEditor = () => {
     const { tabs } = this.state;
     const languages = ['javascript', 'php', 'python', 'ruby'];
+    console.log(tabs, 'TABS');
     return (
       <div className="codeblock-editor">
         {tabs && tabs.content.map((tab, idx) => (
