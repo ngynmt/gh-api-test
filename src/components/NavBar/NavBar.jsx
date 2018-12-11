@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Accordion, List } from 'semantic-ui-react';
+import { Accordion } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import Modal from '../common/Modal';
@@ -86,31 +86,27 @@ class NavBar extends Component {
         );
 
         pages.push(newPage);
-        return (
-          <List.Item key={`section-${idx}`}>
-            <Accordion.Title
-              active={activeIndex === idx}
-              content={section.header}
-              subItem={section.pages[0]}
-              index={idx}
-              onClick={this.handleClick}
-              icon="dropdown"
-            />
-            <Accordion.Content active={activeIndex === idx} content={pages} />
-          </List.Item>
-        );
+        return [
+          <Accordion.Title
+            active={activeIndex === idx}
+            content={section.header}
+            subItem={section.pages[0]}
+            index={idx}
+            onClick={this.handleClick}
+            icon="dropdown"
+          />,
+          <Accordion.Content active={activeIndex === idx} content={pages} />
+        ];
       })
     );
 
     accordionList.unshift(
-      <List.Item key="section-x">
-        <Accordion.Title
-          style={{ color: 'green', cursor: 'pointer' }}
-          content="+ Add A Section"
-          index="section-x"
-          onClick={() => this.openModal('add section')}
-        />
-      </List.Item>
+      <Accordion.Title
+        style={{ color: 'green', cursor: 'pointer' }}
+        content="+ Add A Section"
+        index="section-x"
+        onClick={() => this.openModal('add section')}
+      />
     );
 
     return (
