@@ -16,15 +16,14 @@ class CreatePageModal extends Component {
     this.state = {
       section: props.section,
       title: '',
-      route: '',
     };
   }
 
   createPage = () => {
-    const { state: { section, title, route }, props } = this;
+    const { state: { section, title }, props } = this;
     const page = {
       title,
-      route,
+      route: `/docs/${title.split(' ').join('-')}`,
       components: []
     };
     props.createPage(section, page); // create page
@@ -40,11 +39,6 @@ class CreatePageModal extends Component {
           containerClass="transfer-modal-memo"
           labelTxt="Title of Page (Ex: API Initialization)"
           onChange={e => this.setState({ title: (e.target.value) })}
-        />
-        <Input
-          containerClass="transfer-modal-memo"
-          labelTxt="Route (Ex: /docs/api-initialization)"
-          onChange={e => this.setState({ route: (e.target.value) })}
         />
         <div className="create-page-modal-buttons">
           <SecondaryButton

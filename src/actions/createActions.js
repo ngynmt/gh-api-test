@@ -3,10 +3,13 @@ import {
   CREATE_PAGE,
 } from '../constants/actionConstants';
 
-export function createSection(payload) {
+export function createSection(section, page) {
   return ({
     type: CREATE_SECTION,
-    payload
+    payload: {
+      section,
+      page
+    }
   });
 }
 

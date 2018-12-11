@@ -4,6 +4,7 @@ import { Accordion, List } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import Modal from '../common/Modal';
+import CreateSectionModal from './components/CreateSectionModal';
 import CreatePageModal from './components/CreatePageModal';
 
 import { updatePageSelected } from '../../actions/editActions';
@@ -61,7 +62,7 @@ class NavBar extends Component {
       >
         {modalType === 'add page'
           ? <CreatePageModal section={section} closeModal={this.closeModal} />
-          : null
+          : <CreateSectionModal closeModal={this.closeModal} />
         }
       </Modal>
     );
