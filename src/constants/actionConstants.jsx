@@ -1,3 +1,5 @@
+export const CREATE_SECTION = 'CREATE_SECTION';
+export const CREATE_PAGE = 'CREATE_PAGE';
 export const UPDATE_NAV = 'UPDATE_NAV';
 export const UPDATE_PAGES = 'UPDATE_PAGES';
 export const UPDATE_PAGE_SELECTED = 'UPDATE_PAGE_SELECTED';

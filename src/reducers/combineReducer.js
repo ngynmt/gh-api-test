@@ -3,9 +3,11 @@ import { combineReducers } from 'redux';
 
 // reducers
 import pagesReducer from './pagesReducer';
+import createReducer from './createReducer';
 
 const reducers = combineReducers({
-  pagesReducer
+  pagesReducer,
+  createReducer
 });
 
 export default reducers;
