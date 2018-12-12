@@ -7,7 +7,7 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import python from 'highlight.js/lib/languages/python';
 import ruby from 'highlight.js/lib/languages/ruby';
 import php from 'highlight.js/lib/languages/php';
-import { updatePageComponent } from '../../../actions/editActions';
+import { updatePageComponent, editsMade, addComponent, deleteComponent, switchComponents } from '../../../actions/editActions';
 import CodeBlock from './CodeBlock';
 
 class Preview extends Component {
@@ -37,20 +37,23 @@ class Preview extends Component {
     // window.hljs.initLineNumbersOnLoad();
   }
 
-  generateCodeBlock = (content, idx) => <CodeBlock tabs={content} key={`${idx}-cb`} initializeHighlightJS={this.initializeHighlightJS} />;
+  generateCodeBlock = (content, idx) => <CodeBlock tabs={content} key={`${idx}-cb-${content[0].content}`} initializeHighlightJS={this.initializeHighlightJS} />;
 
-  generateMarkdown = (content, idx) => <Markdown className="md-content" source={content} escapeHtml={false} key={`${idx}-md`} />;
+  generateMarkdown = (content, idx) => <Markdown className="md-content" source={content} escapeHtml={false} key={`${idx}-md-${content}`} />;
 
   renderContent = page => page.components.map((component, idx) => {
+    const { props } = this;
     const { selectedComponent } = this.props;
     // grabs selected page and renders content in component array
     return (
-      <div className="component-wrapper" key={`${idx}-component`}>
+      <div className="component-wrapper" key={`${idx}-component-${Math.random() * 100}`}>
         <div className="component-buttons">
+          {idx !== 0 ? <button type="button" onClick={() => props.switchComponents(idx, idx - 1)}>&#8593;</button> : null}
+          {idx !== page.components.length - 1 ? <button type="button" onClick={() => props.switchComponents(idx, idx + 1)}>&#8595;</button> : null}
           <button type="button" onClick={() => this.updateComponentToEdit(idx, component)}>edit</button>
-          <button type="button">delete</button>
+          <button type="button" onClick={() => this.deleteComponent(idx)}>delete</button>
         </div>
-        {component.type === 'CODEBLOCK' ? this.generateCodeBlock(idx === selectedComponent.index ? selectedComponent.content : component.content, idx) : this.generateMarkdown(idx === selectedComponent.index ? selectedComponent.content : component.content, idx)}
+        {component.type === 'CODEBLOCK' ? this.generateCodeBlock(component.content[0] === selectedComponent.content[0] && selectedComponent.index === component.index ? selectedComponent.content : component.content, idx) : this.generateMarkdown(component.content === selectedComponent.content && selectedComponent.index === component.index ? selectedComponent.content : component.content, idx)}
       </div>
     );
   })
@@ -62,12 +65,48 @@ class Preview extends Component {
     props.updatePageComponent(componentToEdit, 'PREVIEW');
   }
 
+  deleteComponent = (idx) => {
+    const { selectedPage, selectedComponent } = this.props;
+    const { props } = this;
+    const currentComponents = _.map(selectedPage.components, _.clone);
+    currentComponents.splice(idx, 1);
+    // TODO: Prompt are you sure?
+    if (selectedComponent) {
+      currentComponents.forEach((component, index) => {
+        component.content === selectedComponent.content ? this.updateComponentToEdit(index, component) : null;
+      });
+    }
+    props.deleteComponent(idx);
+  }
+
+  addComponent = (type) => {
+    const { props } = this;
+    const { selectedPage } = this.props;
+    const component = { type };
+    if (type === 'MARKDOWN') {
+      component.content = '# Type some markdown';
+    } else if (type === 'CODEBLOCK') {
+      component.content = [{ language: 'javascript', content: '' }];
+    }
+    props.addComponent(component);
+    this.updateComponentToEdit(selectedPage.components.length, component);
+  }
+
   render() {
     const { selectedPage } = this.props;
     return (
       <div className="preview-container">
         {this.renderContent(selectedPage)}
-        <div className="add-component">+</div>
+        <div className="add-component">
+          <div onClick={() => this.addComponent('MARKDOWN')} onKeyPress={() => this.addComponent('MARKDOWN')}>
+            <i className="fas fa-file-alt fa-2x" style={{ color: '#0b75e0' }} />
+            <p>add markdown</p>
+          </div>
+          <div onClick={() => this.addComponent('CODEBLOCK')} onKeyPress={() => this.addComponent('CODEBLOCK')}>
+            <i className="fas fa-file-code fa-2x" style={{ color: '#0b75e0' }} />
+            <p>add codeblock</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -82,4 +121,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updatePageComponent })(Preview);
+export default connect(mapStateToProps, { updatePageComponent, editsMade, addComponent, deleteComponent, switchComponents })(Preview);

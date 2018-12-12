@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import jwt from 'jsonwebtoken';
-// import fs from 'fs';
 import axios from 'axios';
 import PrivateKey from '../../env/privateKey';
 import keys from '../../env/clientKeys';
-// import keys from '../env/synapsefi-api-docs-3-2-editor.2018-12-05.private-key.pem';
-
 import Header from '../Header';
 import NavBar from '../NavBar/NavBar';
+import { saveChanges } from '../../actions/editActions';
 import EditorContainer from './components/EditorContainer';
 import Preview from './components/Preview';
 import { MAIN_LINK } from '../../constants/routeConstants';
@@ -17,7 +16,6 @@ class Edit extends Component {
     super(props);
     this.state = {
       selectedItem: null,
-      content: null,
       token: null
     };
   }
@@ -82,10 +80,18 @@ class Edit extends Component {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  submitChanges = () => { }
+  submitChanges = () => {
+    // todo: warning modal - does not persist changes until PR
+    // save changes to main list
+    const { props } = this;
+    const { selectedPage } = this.props;
+    props.saveChanges(selectedPage);
+  }
 
   render() {
-    const { selectedItem, content } = this.state;
+    const { props } = this;
+    const { selectedItem } = this.state;
+    const { editsMade, selectedPage } = this.props;
     return (
       <div>
         <NavBar />
@@ -97,9 +103,19 @@ class Edit extends Component {
             <Preview />
           </div>
         </div>
+        <div className="save-changes">
+          <button type="button" style={editsMade ? {} : { display: 'none' }} onClick={() => props.saveChanges(selectedPage)} onKeyPress={() => props.saveChanges(selectedPage)}>save changes</button>
+        </div>
       </div>
     );
   }
 }
 
-export default Edit;
+function mapStateToProps(state) {
+  return {
+    selectedPage: state.pagesReducer.selectedPage,
+    editsMade: state.pagesReducer.editsMade
+  };
+}
+
+export default connect(mapStateToProps, { saveChanges })(Edit);

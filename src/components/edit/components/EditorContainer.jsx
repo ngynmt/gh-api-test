@@ -2,10 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Editor } from 'slate-react';
-import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 import _ from 'lodash';
-import { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab } from '../../../actions/editActions';
+import { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab, switchComponents } from '../../../actions/editActions';
 
 class EditorContainer extends Component {
   constructor(props) {
@@ -13,8 +12,7 @@ class EditorContainer extends Component {
     const { selectedComponent } = this.props;
     this.state = {
       value: selectedComponent.type === 'MARKDOWN' ? Plain.deserialize(selectedComponent.content) : null,
-      tabs: selectedComponent.type === 'CODEBLOCK' ? selectedComponent : null,
-      editsMade: false
+      tabs: selectedComponent.type === 'CODEBLOCK' ? selectedComponent : null
     };
   }
 
@@ -27,7 +25,7 @@ class EditorContainer extends Component {
     const { selectedComponent, lastUpdatedBy } = this.props;
     if (prevProps.selectedComponent !== selectedComponent) {
       // import selected component information only when coming from preview for markdown components
-      lastUpdatedBy === 'PREVIEW' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : null;
+      lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : null;
       // update when tabs are added/removed/modified
       selectedComponent.type === 'CODEBLOCK' ? this.setState({ tabs: selectedComponent }) : null;
     }
@@ -62,7 +60,6 @@ class EditorContainer extends Component {
     this.setState({ value });
     if (selectedComponent.content !== plainText) {
       // if updates were made, show the save changes button
-      this.setState({ editsMade: true });
       props.updateComponentContent(plainText, 'EDITOR');
     }
   }
@@ -70,21 +67,18 @@ class EditorContainer extends Component {
   handleLanguageChange = (e, idx) => {
     // updates language for specific tab on codeblock
     const { props } = this;
-    this.setState({ editsMade: true });
     props.updateCodeBlock(e.target.value, 'EDITOR', 'language', idx);
   }
 
   updateSnippet = (e, idx) => {
     // updates snippet for specific tab on codeblock
     const { props } = this;
-    this.setState({ editsMade: true });
     props.updateCodeBlock(e, 'EDITOR', 'content', idx);
   }
 
   addTab = () => {
     // adds a tab on codeblock
     const { props } = this;
-    this.setState({ editsMade: true });
     props.addCodeBlockTab({
       language: 'javascript',
       content: ''
@@ -94,14 +88,12 @@ class EditorContainer extends Component {
   removeTab = (idx) => {
     // removes tab by index on codeblock
     const { props } = this;
-    this.setState({ editsMade: true });
     props.removeCodeBlockTab(idx, 'EDITOR');
   }
 
   renderCodeblockEditor = () => {
     const { tabs } = this.state;
     const languages = ['javascript', 'php', 'python', 'ruby'];
-    console.log(tabs, 'TABS');
     return (
       <div className="codeblock-editor">
         {tabs && tabs.content.map((tab, idx) => (
@@ -109,7 +101,7 @@ class EditorContainer extends Component {
             {tabs.content.length > 1 ? <div className="codeblock-remove-tab" onClick={() => this.removeTab(idx)} onKeyPress={() => this.removeTab(idx)}>x</div> : null}
             <label htmlFor={`language-${idx}`}>
               language
-              <select defaultValue={tabs.content[idx].language} onChange={e => this.handleLanguageChange(e, idx)}>
+              <select defaultValue={tab.language} onChange={e => this.handleLanguageChange(e, idx)}>
                 {languages.map((language, langIdx) => <option key={`${idx}-lang-${langIdx}`} value={language}>{language}</option>)}
               </select>
             </label>
@@ -131,14 +123,10 @@ class EditorContainer extends Component {
 
   render() {
     const { selectedComponent } = this.props;
-    const { editsMade } = this.state;
     return (
       <div className="editor-wrap">
-        <div className="editor-container" style={editsMade ? { maxHeight: '85vh' } : { maxHeight: '90vh' }}>
+        <div className="editor-container">
           {selectedComponent.type === 'MARKDOWN' ? this.renderMarkdownEditor() : this.renderCodeblockEditor()}
-        </div>
-        <div className="save-changes">
-          <button type="button" style={editsMade ? {} : { display: 'none' }}>save changes</button>
         </div>
       </div>
     );
@@ -155,4 +143,4 @@ function mapStateToProps(state) {
 }
 
 
-export default withRouter(connect(mapStateToProps, { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab })(EditorContainer));
+export default withRouter(connect(mapStateToProps, { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab, switchComponents })(EditorContainer));

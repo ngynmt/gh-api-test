@@ -64,12 +64,11 @@ class NavBar extends Component {
   render() {
     const { activeIndex, modalOpen } = this.state;
     const { props, props: { navigation, selectedPage } } = this;
-
     const accordionList = (
       navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
         const pages = section.pages.map((page, pageIdx) => (
           <div key={`page-${pageIdx}`}>
-            <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={() => props.updatePageSelected(section, page)} onKeyPress={() => props.updatePageSelected(section, page)}>
+            <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={() => props.updatePageSelected(section, page, pageIdx, idx)} onKeyPress={() => props.updatePageSelected(section, page, pageIdx, idx)}>
               {page.title}
             </span>
             <br />
@@ -84,7 +83,6 @@ class NavBar extends Component {
             <br />
           </div>
         );
-
         pages.push(newPage);
         return [
           <Accordion.Title
