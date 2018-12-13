@@ -14,20 +14,22 @@ class CreatePageModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      pageIdx: props.pageIdx,
+      idx: props.idx,
       section: props.section,
       title: '',
     };
   }
 
   createPage = () => {
-    const { state: { section, title }, props } = this;
+    const { state: { section, title, pageIdx, idx }, props } = this;
     const page = {
       title,
       route: `/docs/${title.split(' ').join('-')}`,
       components: []
     };
     props.createPage(section, page); // create page
-    props.updatePageSelected(section, page); // show created page in editor
+    props.updatePageSelected(section, page, pageIdx, idx); // show created page in editor
     props.closeModal();
   }
 
