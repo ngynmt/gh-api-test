@@ -153,7 +153,7 @@ class Preview extends Component {
 
   renderConfirmation = () => (
     <div style={{ width: '25.75rem' }}>
-      <p style={{ marginBottom: '3rem', fontWeight: 'bold' }}>Are you sure you want to delete this page? This action cannot be undone.</p>
+      <p style={{ marginBottom: '3rem', fontWeight: 'bold', lineHeight: '1.69' }}>Are you sure you want to delete this page? This action cannot be undone.</p>
       <div className="create-page-modal-buttons">
         <SecondaryButton
           txt="Cancel"
