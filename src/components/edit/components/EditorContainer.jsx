@@ -27,7 +27,7 @@ class EditorContainer extends Component {
 
   componentDidUpdate = (prevProps) => {
     const { selectedComponent, lastUpdatedBy } = this.props;
-    const editor;
+    let editor;
     if (prevProps.selectedComponent !== selectedComponent) {
       if (lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN') {
         // import selected component information only when coming from preview for markdown components
