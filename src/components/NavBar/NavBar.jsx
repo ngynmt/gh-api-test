@@ -106,7 +106,7 @@ class NavBar extends Component {
 
     return (
       <div className="sidebar">
-        <Logo style={{ margin: '0px auto 1.5rem', height: '2.5rem' }} />
+        <Logo style={{ margin: '0px auto', height: '2.5rem' }} />
         <Accordion>
           {accordionList}
         </Accordion>
