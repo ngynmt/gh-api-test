@@ -125,8 +125,6 @@ class Edit extends Component {
               <EditorContainer selectedItem={selectedItem} />
             </div>
             <div className="preview-wrapper">
-              <div className="wrapper-headers">PREVIEW</div>
-              <div className="wrapper-title-bar" />
               <Preview />
             </div>
           </div>

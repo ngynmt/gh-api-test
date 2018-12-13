@@ -10,9 +10,10 @@ import {
   REMOVE_CODE_BLOCK_TAB,
   UPDATE_PAGES,
   UPDATE_COMPONENT_CONTENT,
-  EDITS_MADE,
   ADD_COMPONENT,
   DELETE_COMPONENT,
+  DELETE_PAGE,
+  UPDATE_PAGE_TITLE,
   SWITCH_COMPONENTS,
   CREATE_SECTION,
   CREATE_PAGE
@@ -37,13 +38,10 @@ const initialState = {
 export default (state = initialState, action) => {
   let results;
   let first;
+  let firstComponent;
   let newNav;
+  let newPageSelected;
   switch (action.type) {
-    case EDITS_MADE:
-      return {
-        ...state,
-        editsMade: action.payload
-      };
     case SAVE_CHANGES:
       return {
         ...state,
@@ -60,11 +58,6 @@ export default (state = initialState, action) => {
           ...state.navigation.slice(state.selectedHeaderIndex + 1)
         ],
         editsMade: false
-      };
-    case UPDATE_NAV:
-      return {
-        ...state,
-        navigation: []
       };
     case UPDATE_PAGE_SELECTED:
       return {
@@ -255,6 +248,33 @@ export default (state = initialState, action) => {
           return {
             ...state,
             navigation: newNav // return copy
+          };
+        }
+      }
+      break;
+    case DELETE_PAGE:
+      newNav = _.cloneDeep(state.navigation);
+      newNav[state.selectedHeaderIndex].pages.splice(state.selectedPageIndex, 1);
+      for (let i = 0; i < newNav.length; i++) {
+        if (newNav[i].pages.length > 0) {
+          newPageSelected = newNav[i].pages[0];
+          if (newNav[i].pages[0].components.length > 0) {
+            firstComponent = newNav[i].pages[0].components[0];
+            firstComponent.index = 0;
+          } else {
+            firstComponent = {
+              type: 'MARKDOWN',
+              index: 0,
+              content: `# ${newNav[i].pages[0].title}`
+            };
+            newPageSelected.components.push(firstComponent);
+          }
+          return {
+            ...state,
+            navigation: newNav,
+            selectedPage: newPageSelected,
+            selectedComponent: firstComponent,
+            lastUpdatedBy: 'ELSEWHERE'
           };
         }
       }

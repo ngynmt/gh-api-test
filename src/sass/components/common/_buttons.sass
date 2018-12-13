@@ -5,7 +5,7 @@
   margin: 0 !important
   padding: 0 !important
   border-radius: 1px !important
-  border: solid 1px #000000 !important
+  border: solid 1px #000000
   font-size: 1rem !important
   outline: none !important
   font-family: Roboto !important
@@ -13,9 +13,9 @@
 
 .primary-button
   color: #ffffff !important
-  background-color: #000000 !important
+  background-color: #000000
   &:hover
-    background-color: #333333 !important
+    background-color: #333333
 
 .secondary-button
   color: #000000 !important
@@ -23,3 +23,14 @@
   &:hover
     color: #333333 !important
     border: solid 1px #333333 !important
+
+.disabled
+  background-color: #b2b2b2 !important
+  color: #f8f8f8 !important
+  border: 1px solid #b2b2b2 !important
+  // pointer-events: none
+  cursor: not-allowed
+  &:hover
+  background-color: #b2b2b2 !important
+  color: #f8f8f8 !important
+  border: solid 1px #b2b2b2 !important

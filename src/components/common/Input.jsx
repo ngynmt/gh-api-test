@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Input = ({ id, type, containerClass, labelClass, inputClass, placeHolder, containerStyle, labelStyle, inputStyle, onChange, labelTxt, onFocus }) => (
+const Input = ({ id, type, containerClass, labelClass, inputClass, placeHolder, containerStyle, labelStyle, inputStyle, onChange, labelTxt, onFocus, defaultValue, onSubmit }) => (
   <div className={containerClass} style={containerStyle}>
     <label
       htmlFor={id}
@@ -8,7 +8,7 @@ const Input = ({ id, type, containerClass, labelClass, inputClass, placeHolder, 
       style={labelStyle}
     >
       {labelTxt || null}
-      <form>
+      <form onSubmit={onSubmit ? e => onSubmit(e) : e => e.preventDefault()}>
         <input
           id={id}
           type={type || 'text'}
@@ -16,6 +16,7 @@ const Input = ({ id, type, containerClass, labelClass, inputClass, placeHolder, 
           style={inputStyle}
           placeholder={placeHolder || 'Type something'}
           onChange={onChange}
+          defaultValue={defaultValue || null}
           onFocus={onFocus}
           autoComplete="off"
         />
