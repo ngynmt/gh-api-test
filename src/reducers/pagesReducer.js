@@ -73,8 +73,9 @@ export default (state = initialState, action) => {
         selectedHeader: action.payload.section,
         selectedPageIndex: action.payload.index,
         selectedComponent: action.payload.firstComponent,
-        updatedBy: 'ELSEWHERE',
-        selectedHeaderIndex: action.payload.hIndex
+        lastUpdatedBy: 'ELSEWHERE',
+        selectedHeaderIndex: action.payload.hIndex,
+        editsMade: false
       };
     case UPDATE_PAGES:
       // placeholder
