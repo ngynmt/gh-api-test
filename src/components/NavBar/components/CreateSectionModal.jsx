@@ -42,12 +42,12 @@ class CreateSectionModal extends Component {
       <div className="transfer-modal-container">
         <Input
           containerClass="transfer-modal-memo"
-          labelTxt="Section Header (Ex: Resources)"
+          placeHolder="Section Header (Ex: Resources)"
           onChange={e => this.setState({ header: (e.target.value) })}
         />
         <Input
           containerClass="transfer-modal-memo"
-          labelTxt="Title of Page (Ex: API Initialization)"
+          placeHolder="Title of Page (Ex: API Initialization)"
           onChange={e => this.setState({ title: (e.target.value) })}
         />
         <div className="create-page-modal-buttons">

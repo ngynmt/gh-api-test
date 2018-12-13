@@ -1,11 +1,12 @@
 
 .Rectangle-9
-  width: 50%
+  // width: 50%
   height: fit-content
+  margin: 30px auto 0 !important
   //min-width: 320px
-  min-height: 50%
+  min-height: fit-content
   min-width: fit-content
-  padding: 0 5em 5em
+  // padding: 0 5em 5em
   border-radius: 20px
   background-color: #ffffff
   margin: auto
@@ -16,15 +17,18 @@
   bottom: 0
   z-index: 102
   overflow: hidden
-  width: 90%
+  // width: 90%
   min-width: auto
-  padding: 0 2rem 3rem
-  height: 100vh
-  width: 100vw
+  padding-top: 2.5rem
+  // height: 100vh
+  // width: 100vw
+  border-radius: 5px
+  height: fit-content
   overflow-y: auto  !important
-  border-radius: unset
+  // border-radius: unset
   top: 0 !important
   position: fixed !important
+  width: fit-content
   // Start Overlay During Popup
 .coverAll-Dark
   visibility: visible
@@ -56,6 +60,7 @@
   height: 32px
   opacity: 0.3
   cursor: pointer
+  display: none
 
 .close:hover
   opacity: 1
@@ -75,3 +80,15 @@
   transform: rotate(-45deg)
 
   
+.create-page-modal-buttons
+  display: flex
+  justify-content: space-between
+  width: 100%
+  margin: .5rem auto
+  button
+    width: 48.5% !important
+
+.transfer-modal-container
+  margin: 0 auto !important
+  .transfer-modal-memo
+    margin: 0 auto !important

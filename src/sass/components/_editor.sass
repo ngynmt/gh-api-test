@@ -6,21 +6,47 @@
     justify-content: center
     // padding: 5px 10px
     height: fit-content
-    max-height: 86vh
+    // max-height: 86vh
     min-height: 50vh
     overflow: scroll
+    .ace-editor-div
+      border: 1px solid #eeeeee
+      box-sizing: border-box
+    .ace_heading
+      font-weight: bold
+      // font-size: 13px
+    .ace_string
+      color: #c6254e
+    .ace_blockquote
+      color: #c6254e
+    .ace_emphasis
+      font-style: italic
+      color: #18C6DB
+    .ace_strong
+      font-weight: bold !important
+      color: #c6254e !important
+    .ace_support.ace_function
+      color: #18C6DB
     .codeblock-editor
       display: flex
       flex-direction: column
       width: 100%
+      max-height: 80vh
+      overflow-y: scroll
       .codeblock-editor-tab
         padding: 5px 10px
-        background: #EEE
+        background: #f7f7f7
+        border-radius: 5px
         margin: 5px 0
         label
           display: flex
           flex-direction: column
+          padding-top: 5px
           margin: 5px auto
+          font-family: Roboto
+          font-size: .8rem
+          letter-spacing: 1px
+          color: #4a5261
           select
             margin: 5px 0 10px
           textarea
@@ -49,7 +75,7 @@
   width: 100%
   button
     border: none
-    background: #00d98e
+    background: rgb(55, 239, 186)
     color: white
     font-weight: bold
     font-family: Roboto, sans-serif
@@ -58,4 +84,35 @@
     min-height: 40px
     padding: 10px
     font-size: 1rem
+    z-index: 9
 
+.add-codeblock-button
+  border: 1px dotted #18C6DB
+  // display: flex
+  // flex-direction: column
+  // align-items: center
+  // justify-content: center
+  width: 100%
+  font-size: .9rem
+  padding-top: 15px
+  border-radius: 5px
+  box-sizing: border-box
+  height: 5.25rem !important
+  text-align: center
+  &:hover
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3)
+    border: 1px dotted black
+  p
+    color: black
+    padding: 0
+    margin: 12px 0 10px
+
+.wrapper-title-bar
+  // height: 1.25rem
+  button
+    border: none
+
+.code-snippets
+  font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace
+  border: none
+  padding: 5px

@@ -44,18 +44,66 @@ class EditorContainer extends Component {
     // <Editor className="md-editor" value={value} onChange={this.updateMarkdown} onKeyDown={this.onKeyDown} onFocus={this.closeSideBar} />
     const { value } = this.state;
     return (
-      <AceEditor
-        mode="markdown"
-        theme="github"
-        onChange={e => this.updateAceMarkdown(e)}
-        name="ace-edit-div"
-        width="100%"
-        height="85vh"
-        showPrintMargin={false}
-        value={value}
-        // editorProps={{ $blockScrolling: true }}
-      />
+      <div>
+        <AceEditor
+          mode="markdown"
+          className="ace-editor-div"
+          ref="reactAceComponent"
+          theme="github"
+          onChange={e => this.updateAceMarkdown(e)}
+          name="ace-edit-div"
+          width="100%"
+          highlightActiveLine={false}
+          height="80vh"
+          // onSelectionChange={this.handleSelectionChange}
+          showPrintMargin={false}
+          value={value}
+          // editorProps={{ $blockScrolling: true }}
+        />
+      </div>
     );
+  }
+
+  applyStyles = (type) => {
+    const reactAceComponent = this.refs.reactAceComponent;
+    const editor = reactAceComponent.editor;
+    let selectionRow;
+    let selectionRows;
+    switch (type) {
+      case 'HEADING':
+        // add # to beginning of line to create header
+        selectionRow = editor.getCursorPosition().row;
+        editor.session.insert({ row: selectionRow, column: 0 }, '# ');
+        break;
+      case 'BOLD':
+        // adds ** around selected text to bold
+        editor.session.insert(editor.getSelectionRange().start, '**');
+        editor.session.insert(editor.getSelectionRange().end, '**');
+        break;
+      case 'ITALIC':
+        // adds _ around selected text to italicize
+        editor.session.insert(editor.getSelectionRange().start, '_');
+        editor.session.insert(editor.getSelectionRange().end, '_');
+        break;
+      case 'CODE':
+        // adds ` around selected text to create code snippet
+        editor.session.insert(editor.getSelectionRange().start, '`');
+        editor.session.insert(editor.getSelectionRange().end, '`');
+        break;
+      case 'BLOCKQUOTE':
+        // adds > to beginning of every line selected to create blockquote
+        selectionRows = [editor.getSelectionRange().start.row, editor.getSelectionRange().end.row];
+        for (let i = selectionRows[0]; i < selectionRows[1]; i++) {
+          editor.session.insert({ row: i, column: 0 }, '> ');
+        }
+        break;
+      case 'QUESTION':
+        // opens link to markdown cheatsheet in new window
+        window.open('https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet');
+        break;
+      default:
+        return null;
+    }
   }
 
   updateAceMarkdown = (value) => {
@@ -133,11 +181,14 @@ class EditorContainer extends Component {
             </label>
             <label htmlFor={`snippet-${idx}`}>
               snippet
-              <textarea onChange={_.flowRight(_.debounce(e => this.updateSnippet(e, idx), 1000, { leading: false, trailing: true }), _.property('target.value'))} id={`snippet-${idx}`} rows={8} defaultValue={tab.content} />
+              <textarea className="code-snippets" onChange={_.flowRight(_.debounce(e => this.updateSnippet(e, idx), 1000, { leading: false, trailing: true }), _.property('target.value'))} id={`snippet-${idx}`} rows={8} defaultValue={tab.content} />
             </label>
           </div>
         ))}
-        <div className="codeblock-add-tab" onClick={this.addTab} onKeyPress={this.addTab}>+</div>
+        <div className="add-codeblock-button" onClick={this.addTab} onKeyPress={this.addTab}>
+          <i className="fas fa-code fa-2x" style={{ color: '#18C6DB' }} />
+          <p>add codeblock</p>
+        </div>
       </div>
     );
   }
@@ -150,7 +201,22 @@ class EditorContainer extends Component {
   render() {
     const { selectedComponent } = this.props;
     return (
-      <div className="editor-container" style={selectedComponent.type === 'MARKDOWN' ? { border: '1px solid #EEE' } : {}}>
+      <div className="editor-container">
+        <div className="wrapper-headers">
+          <span>EDITOR</span>
+          <div className="wrapper-title-bar">
+            {selectedComponent.type === 'MARKDOWN' ? (
+              <Fragment>
+                <button type="button" onClick={() => this.applyStyles('HEADING')}><i className="fas fa-heading" style={{ color: '#4a5261' }} /></button>
+                <button type="button" onClick={() => this.applyStyles('BOLD')}><i className="fas fa-bold" style={{ color: '#4a5261' }} /></button>
+                <button type="button" onClick={() => this.applyStyles('ITALIC')}><i className="fas fa-italic" style={{ color: '#4a5261' }} /></button>
+                <button type="button" onClick={() => this.applyStyles('CODE')}><i className="fas fa-code" style={{ color: '#4a5261' }} /></button>
+                <button type="button" onClick={() => this.applyStyles('BLOCKQUOTE')}><i className="fas fa-quote-right" style={{ color: '#4a5261' }} /></button>
+                <button type="button" onClick={() => this.applyStyles('QUESTION')}><i className="fas fa-question" style={{ color: '#4a5261' }} /></button>
+              </Fragment>
+            ) : <div />}
+          </div>
+        </div>
         {selectedComponent.type === 'MARKDOWN' ? this.renderMarkdownEditor() : this.renderCodeblockEditor()}
       </div>
     );

@@ -82,7 +82,7 @@ const Header = ({ isOpen, toggleSideBar }) => {
         <span style={burgerStyle.middle} />
         <span style={burgerStyle.bottom} />
       </a>
-      <Logo style={{ display: 'none' }} />
+      {/* <Logo style={{ display: 'none' }} /> */}
     </div>
   );
 };

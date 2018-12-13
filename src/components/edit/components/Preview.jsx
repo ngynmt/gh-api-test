@@ -16,6 +16,12 @@ class Preview extends Component {
     this.state = {};
   }
 
+  componentDidMount = () => {
+    const { selectedPage } = this.props;
+    // select first component on page to view in editor by default
+    this.updateComponentToEdit(0, selectedPage.components[0]);
+  }
+
   componentDidUpdate = (prevProps) => {
     const { selectedComponent, lastUpdatedBy } = this.props;
     if (lastUpdatedBy === 'EDITOR' && selectedComponent.type === 'CODEBLOCK' && prevProps.selectedComponent.content !== selectedComponent.content) {
@@ -95,7 +101,7 @@ class Preview extends Component {
   render() {
     const { selectedPage, editsMade } = this.props;
     return (
-      <div className="preview-container" style={editsMade ? { maxHeight: '85vh' } : { maxHeight: '90vh' }}>
+      <div className="preview-container" style={editsMade ? { maxHeight: '80vh' } : { maxHeight: '85vh' }}>
         {this.renderContent(selectedPage)}
         <div className="add-component">
           <div onClick={() => this.addComponent('MARKDOWN')} onKeyPress={() => this.addComponent('MARKDOWN')}>

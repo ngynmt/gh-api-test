@@ -69,12 +69,7 @@ export default [{
 },
 {
   header: 'Ledgering (IOU)',
-  pages: [{
-    title: 'API Initialization',
-    route: '/docs/api-initialization',
-    components: []
-  }
-  ]
+  pages: []
 },
 {
   header: 'Deposit Accounts',
