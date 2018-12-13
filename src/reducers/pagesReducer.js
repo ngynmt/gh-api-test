@@ -73,9 +73,9 @@ export default (state = initialState, action) => {
         selectedHeader: action.payload.section,
         selectedPageIndex: action.payload.index,
         selectedComponent: action.payload.firstComponent,
-        lastUpdatedBy: 'ELSEWHERE',
+        lastUpdatedBy: 'ELSEWHERE', // not updated by the editor or the preview component
         selectedHeaderIndex: action.payload.hIndex,
-        editsMade: false
+        editsMade: false // new page selection, so no edits were made
       };
     case UPDATE_PAGES:
       // placeholder
@@ -248,13 +248,13 @@ export default (state = initialState, action) => {
         selectedPage: action.payload.page
       };
     case CREATE_PAGE:
-      newNav = _.cloneDeep(state.navigation);
-      for (let i = 0; i < newNav.length; i += 1) {
+      newNav = _.cloneDeep(state.navigation); // creating deep copy of navigation in state
+      for (let i = 0; i < newNav.length; i += 1) { // modifying copy
         if (newNav[i].header === action.payload.section.header) {
           newNav[i].pages.push(action.payload.page);
           return {
             ...state,
-            navigation: newNav
+            navigation: newNav // return copy
           };
         }
       }
