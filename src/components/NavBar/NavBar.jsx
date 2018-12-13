@@ -53,7 +53,7 @@ class NavBar extends Component {
     return (
       <Modal
         closeModal={this.closeModal}
-        modalStyle={{ height: 'fit-content', paddingTop: '4rem', maxWidth: '640px', width: '100vw', maxHeight: '23.5rem' }}
+        modalStyle={{ height: 'fit-content', padding: '2.5rem 3rem', maxWidth: '640px', maxHeight: '23.5rem' }}
       >
         {modalType === 'add page'
           ? <CreatePageModal section={section} pageIdx={pageIdx} idx={idx} closeModal={this.closeModal} />
@@ -103,7 +103,7 @@ class NavBar extends Component {
 
     accordionList.push(
       <Accordion.Title
-        style={{ color: '#37EFBA', cursor: 'pointer' }}
+        style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial' }}
         content="+ Add A Section"
         index="section-x"
         onClick={() => this.openModal('add section')}
@@ -112,7 +112,7 @@ class NavBar extends Component {
 
     return (
       <div className="sidebar">
-        <Logo style={{ margin: '0px auto', height: '2.5rem' }} />
+        <div style={{ margin: '1rem auto 3rem', height: '1rem' }}><Logo /></div>
         <Accordion>
           {accordionList}
         </Accordion>

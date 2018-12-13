@@ -7,7 +7,7 @@ const Input = ({ id, type, containerClass, labelClass, inputClass, placeHolder, 
       className={`common-label ${labelClass}`}
       style={labelStyle}
     >
-      {labelTxt}
+      {labelTxt || null}
       <form>
         <input
           id={id}

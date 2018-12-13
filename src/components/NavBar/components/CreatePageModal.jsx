@@ -39,7 +39,7 @@ class CreatePageModal extends Component {
       <div className="transfer-modal-container">
         <Input
           containerClass="transfer-modal-memo"
-          labelTxt="Title of Page (Ex: API Initialization)"
+          placeHolder="Title of Page (Ex: API Initialization)"
           onChange={e => this.setState({ title: (e.target.value) })}
         />
         <div className="create-page-modal-buttons">
@@ -57,10 +57,4 @@ class CreatePageModal extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-
-  };
-}
-
-export default connect(mapStateToProps, { createPage, updatePageSelected })(CreatePageModal);
+export default connect(null, { createPage, updatePageSelected })(CreatePageModal);

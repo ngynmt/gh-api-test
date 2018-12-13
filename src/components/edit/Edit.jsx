@@ -125,11 +125,11 @@ class Edit extends Component {
           <div className="content-container" onClick={() => this.closeSideBar()} onKeyPress={() => this.closeSideBar()}>
             {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
             <div className="editor-wrapper">
-              <div className="wrapper-headers">EDITOR</div>
               <EditorContainer selectedItem={selectedItem} />
             </div>
             <div className="preview-wrapper">
               <div className="wrapper-headers">PREVIEW</div>
+              <div className="wrapper-title-bar" />
               <Preview />
             </div>
           </div>

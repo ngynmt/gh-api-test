@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Logo = ({ style }) => (
-  <svg style={style} xmlns="http://www.w3.org/2000/svg" width="261" height="50" viewBox="0 0 261 50">
+  <svg xmlns="http://www.w3.org/2000/svg" width="261" height="50" viewBox="0 0 261 50">
     <g fill="none" fillRule="evenodd">
       <g fillRule="nonzero">
         <g fill="#19C5DB">

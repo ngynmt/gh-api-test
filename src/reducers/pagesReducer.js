@@ -13,7 +13,9 @@ import {
   EDITS_MADE,
   ADD_COMPONENT,
   DELETE_COMPONENT,
-  SWITCH_COMPONENTS
+  SWITCH_COMPONENTS,
+  CREATE_SECTION,
+  CREATE_PAGE
 } from '../constants/actionConstants';
 import navigation from '../data/mainList';
 
@@ -35,6 +37,7 @@ const initialState = {
 export default (state = initialState, action) => {
   let results;
   let first;
+  let newNav;
   switch (action.type) {
     case EDITS_MADE:
       return {
@@ -193,8 +196,16 @@ export default (state = initialState, action) => {
         selectedPage: {
           ...state.selectedPage,
           components: [
-            ...state.selectedPage.components[state.selectedComponent.index].content.slice(0, action.payload.index),
-            ...state.selectedPage.components[state.selectedComponent.index].content.slice(action.payload.index + 1)
+            ...state.selectedPage.components.slice(0, state.selectedComponent.index),
+            {
+              content: [
+                ...state.selectedPage.components[state.selectedComponent.index].content.slice(0, action.payload.index),
+                ...state.selectedPage.components[state.selectedComponent.index].content.slice(action.payload.index + 1)
+              ],
+              index: state.selectedComponent.index,
+              type: 'CODEBLOCK'
+            },
+            ...state.selectedPage.components.slice(state.selectedComponent.index + 1)
           ]
         },
         editsMade: true
@@ -226,6 +237,26 @@ export default (state = initialState, action) => {
         },
         editsMade: true
       };
+    case CREATE_SECTION:
+      newNav = _.cloneDeep(state.navigation);
+      newNav.push(action.payload.section);
+      return {
+        ...state,
+        navigation: newNav,
+        selectedPage: action.payload.page
+      };
+    case CREATE_PAGE:
+      newNav = _.cloneDeep(state.navigation);
+      for (let i = 0; i < newNav.length; i += 1) {
+        if (newNav[i].header === action.payload.section.header) {
+          newNav[i].pages.push(action.payload.page);
+          return {
+            ...state,
+            navigation: newNav
+          };
+        }
+      }
+      break;
     default:
       return state;
   }

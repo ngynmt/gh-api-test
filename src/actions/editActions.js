@@ -61,7 +61,7 @@ export function updatePageSelected(section, page, index, hIndex) {
     firstComponent = {
       type: 'MARKDOWN',
       index: 0,
-      content: '# Type some markdown'
+      content: `# ${page.title}`
     };
     updatedPage = _.cloneDeep(page);
     updatedPage.components.push(firstComponent);
