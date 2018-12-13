@@ -27,12 +27,13 @@ class EditorContainer extends Component {
 
   componentDidUpdate = (prevProps) => {
     const { selectedComponent, lastUpdatedBy } = this.props;
-    const editor = this.refs.reactAceComponent.editor;
+    const editor;
     if (prevProps.selectedComponent !== selectedComponent) {
       if (lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN') {
         // import selected component information only when coming from preview for markdown components
         this.setState({ value: selectedComponent.content });
         // attempt to reset undo stack (doesn't work... yet)
+        editor = this.refs.reactAceComponent.editor;
         editor.getSession().getUndoManager().reset();
         editor.getSession().getUndoManager().$undoStack = [];
       } else if (selectedComponent.type === 'CODEBLOCK') {
