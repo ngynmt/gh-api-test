@@ -16,6 +16,7 @@ class Edit extends Component {
     super(props);
     this.state = {
       selectedItem: null,
+      isOpen: true,
       token: null
     };
   }
@@ -88,23 +89,53 @@ class Edit extends Component {
     props.saveChanges(selectedPage);
   }
 
+  toggleSideBar = () => {
+    const { isOpen } = this.state;
+    console.log('toggle');
+    if (isOpen) {
+      console.log('open', isOpen);
+      document.getElementsByClassName('sidebar')[0].style.width = '0';
+      document.getElementsByClassName('main-page')[0].style.left = '0';
+    } else {
+      console.log('closed', isOpen);
+      document.getElementsByClassName('sidebar')[0].style.width = '19rem';
+      document.getElementsByClassName('main-page')[0].style.left = '19rem';
+    }
+    this.setState({ isOpen: !isOpen });
+  };
+
+  closeSideBar = () => {
+    const { isOpen } = this.state;
+    if (isOpen) {
+      document.getElementsByClassName('sidebar')[0].style.width = '0';
+      document.getElementsByClassName('main-page')[0].style.left = '0';
+      this.setState({ isOpen: false });
+    }
+  }
+
   render() {
     const { props } = this;
-    const { selectedItem } = this.state;
+    const { selectedItem, isOpen } = this.state;
     const { editsMade, selectedPage } = this.props;
     return (
-      <div>
+      <div style={{ overflow: 'hidden' }}>
         <NavBar />
-        <div>
-          <Header className="header-content" />
-          <div className="content-container">
+        <div className="main-page">
+          <Header className="header-content" toggleSideBar={() => this.toggleSideBar()} isOpen={isOpen} />
+          <div className="content-container" onClick={() => this.closeSideBar()} onKeyPress={() => this.closeSideBar()}>
             {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
-            <EditorContainer selectedItem={selectedItem} />
-            <Preview />
+            <div className="editor-wrapper">
+              <div className="wrapper-headers">EDITOR</div>
+              <EditorContainer selectedItem={selectedItem} />
+            </div>
+            <div className="preview-wrapper">
+              <div className="wrapper-headers">PREVIEW</div>
+              <Preview />
+            </div>
           </div>
-        </div>
-        <div className="save-changes">
-          <button type="button" style={editsMade ? {} : { display: 'none' }} onClick={() => props.saveChanges(selectedPage)} onKeyPress={() => props.saveChanges(selectedPage)}>save changes</button>
+          <div className="save-changes">
+            <button type="button" style={editsMade ? {} : { display: 'none' }} onClick={() => props.saveChanges(selectedPage)} onKeyPress={() => props.saveChanges(selectedPage)}>save changes</button>
+          </div>
         </div>
       </div>
     );

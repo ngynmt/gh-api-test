@@ -1,5 +1,9 @@
+.main-page
+  position: relative
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1)
+  height: 100vh
+  left: 19rem
 .content-container
-  min-height: 90vh
   padding: 10px 38px
   display: flex
   justify-content: space-between
@@ -92,19 +96,20 @@
   thead
     tr
       height: 3.375rem
-
+.preview-wrapper
+  width: 49.5%
 .preview-container
-  width: 48%
   height: fit-content
-  max-height: 90vh
+  // max-height: 80vh
   overflow: scroll
-  padding: 1px 5px 50px
+  padding: 1px 5px
   .component-wrapper
     padding: 10px
     margin-bottom: 10px
     min-height: 4rem
     &:hover
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3)
+      // background-color: #eee
     .component-buttons
       float: right
       button
@@ -112,10 +117,10 @@
         font-size: 1rem
         font-weight: bold
         font-family: Roboto
-        color: #0b75e0
+        color: #18C6DB
         border: none
         &:hover
-          color: #e0760b
+          color: black
 .add-component
   margin: 5px auto
   width: 98%
@@ -124,7 +129,7 @@
   display: flex
   justify-content: space-between
   div
-    border: 1px dotted #0b75e0
+    border: 1px dotted black
     display: flex
     flex-direction: column
     align-items: center
@@ -135,8 +140,65 @@
     border-radius: 5px
     &:hover
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3)
-      border: 1px dotted #e0760b
+      border: 1px dotted #18C6DB
     p
-      color: #0b75e0
+      color: black
       padding: 0
       margin: 15px 0 10px
+
+.toggle
+  display: block
+  float: left
+  height: 16px
+  padding: 25px 16px 26px
+  width: 40px
+  span
+    -webkit-backface-visibility: hidden
+    backface-visibility: hidden
+    background-color: #d3daea
+    height: 2px
+    -webkit-transition: all .3s
+    transition: all .3s
+    width: 20px
+    display: block
+    position: relative
+    // &::before
+    //   -webkit-transform: rotate(45deg) translate(3px,3px)
+    //   transform: rotate(45deg) translate(3px,3px)
+    //   -webkit-backface-visibility: hidden
+    //   backface-visibility: hidden
+    //   background-color: #d3daea
+    //   height: 2px
+    //   -webkit-transition: all .3s
+    //   transition: all .3s
+    //   width: 20px
+    //   content: ''
+    //   left: 0
+    //   position: absolute
+    //   top: -6px
+    // &::after
+    //   -webkit-backface-visibility: hidden
+    //   backface-visibility: hidden
+    //   background-color: #d3daea
+    //   height: 2px
+    //   -webkit-transition: all .3s
+    //   transition: all .3s
+    //   width: 20px
+    //   -webkit-transform: rotate(-45deg) translate(5px,-6px)
+    //   transform: rotate(-45deg) translate(5px,-6px)
+    //   content: ''
+    //   left: 0
+    //   position: absolute
+    //   top: -6px
+    //   top: 6px
+
+.wrapper-headers
+  border-bottom: 2px dotted #e8e8e8
+  padding: 10px 10px 6px
+  font-family: Roboto
+  font-weight: bold
+  -webkit-font-smoothing: antialiased
+  letter-spacing: 3px
+  font-size: 1.2rem
+  color: #4a5261
+  margin-bottom: 10px

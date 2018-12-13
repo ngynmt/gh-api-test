@@ -15,7 +15,7 @@ import {
   UPDATE_COMPONENT_CONTENT
 } from '../constants/actionConstants';
 
-export function editsMade(boolean) {
+export function isEdited(boolean) {
   // set to true if changes were made
   return ({
     type: EDITS_MADE,

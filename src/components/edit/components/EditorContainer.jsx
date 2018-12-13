@@ -4,6 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { Editor } from 'slate-react';
 import Plain from 'slate-plain-serializer';
 import _ from 'lodash';
+import AceEditor from 'react-ace';
+import 'brace/mode/markdown';
+import 'brace/theme/github';
 import { updateComponentContent, updateCodeBlock, addCodeBlockTab, removeCodeBlockTab, switchComponents } from '../../../actions/editActions';
 
 class EditorContainer extends Component {
@@ -11,7 +14,8 @@ class EditorContainer extends Component {
     super(props);
     const { selectedComponent } = this.props;
     this.state = {
-      value: selectedComponent.type === 'MARKDOWN' ? Plain.deserialize(selectedComponent.content) : null,
+      value: selectedComponent.type === 'MARKDOWN' ? selectedComponent.content : null,
+      // value: selectedComponent.type === 'MARKDOWN' ? Plain.deserialize(selectedComponent.content) : null,
       tabs: selectedComponent.type === 'CODEBLOCK' ? selectedComponent : null
     };
   }
@@ -25,7 +29,8 @@ class EditorContainer extends Component {
     const { selectedComponent, lastUpdatedBy } = this.props;
     if (prevProps.selectedComponent !== selectedComponent) {
       // import selected component information only when coming from preview for markdown components
-      lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : null;
+      lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: selectedComponent.content }) : null;
+      // lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : null;
       // update when tabs are added/removed/modified
       selectedComponent.type === 'CODEBLOCK' ? this.setState({ tabs: selectedComponent }) : null;
     }
@@ -36,10 +41,31 @@ class EditorContainer extends Component {
   };
 
   renderMarkdownEditor = () => {
+    // <Editor className="md-editor" value={value} onChange={this.updateMarkdown} onKeyDown={this.onKeyDown} onFocus={this.closeSideBar} />
     const { value } = this.state;
     return (
-      <Editor className="md-editor" value={value} onChange={this.updateMarkdown} onKeyDown={this.onKeyDown} onFocus={this.closeSideBar} />
+      <AceEditor
+        mode="markdown"
+        theme="github"
+        onChange={e => this.updateAceMarkdown(e)}
+        name="ace-edit-div"
+        width="100%"
+        height="85vh"
+        showPrintMargin={false}
+        value={value}
+        // editorProps={{ $blockScrolling: true }}
+      />
     );
+  }
+
+  updateAceMarkdown = (value) => {
+    const { props } = this;
+    const { selectedComponent } = this.props;
+    this.setState({ value });
+    if (selectedComponent.content !== value) {
+      // if updates were made, show the save changes button
+      props.updateComponentContent(value, 'EDITOR');
+    }
   }
 
   onKeyDown = (event, editor, next) => {
@@ -124,10 +150,8 @@ class EditorContainer extends Component {
   render() {
     const { selectedComponent } = this.props;
     return (
-      <div className="editor-wrap">
-        <div className="editor-container">
-          {selectedComponent.type === 'MARKDOWN' ? this.renderMarkdownEditor() : this.renderCodeblockEditor()}
-        </div>
+      <div className="editor-container" style={selectedComponent.type === 'MARKDOWN' ? { border: '1px solid #EEE' } : {}}>
+        {selectedComponent.type === 'MARKDOWN' ? this.renderMarkdownEditor() : this.renderCodeblockEditor()}
       </div>
     );
   }

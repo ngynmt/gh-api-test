@@ -7,7 +7,7 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import python from 'highlight.js/lib/languages/python';
 import ruby from 'highlight.js/lib/languages/ruby';
 import php from 'highlight.js/lib/languages/php';
-import { updatePageComponent, editsMade, addComponent, deleteComponent, switchComponents } from '../../../actions/editActions';
+import { updatePageComponent, isEdited, addComponent, deleteComponent, switchComponents } from '../../../actions/editActions';
 import CodeBlock from './CodeBlock';
 
 class Preview extends Component {
@@ -93,17 +93,17 @@ class Preview extends Component {
   }
 
   render() {
-    const { selectedPage } = this.props;
+    const { selectedPage, editsMade } = this.props;
     return (
-      <div className="preview-container">
+      <div className="preview-container" style={editsMade ? { maxHeight: '85vh' } : { maxHeight: '90vh' }}>
         {this.renderContent(selectedPage)}
         <div className="add-component">
           <div onClick={() => this.addComponent('MARKDOWN')} onKeyPress={() => this.addComponent('MARKDOWN')}>
-            <i className="fas fa-file-alt fa-2x" style={{ color: '#0b75e0' }} />
+            <i className="fas fa-file-alt fa-2x" style={{ color: '#18C6DB' }} />
             <p>add markdown</p>
           </div>
           <div onClick={() => this.addComponent('CODEBLOCK')} onKeyPress={() => this.addComponent('CODEBLOCK')}>
-            <i className="fas fa-file-code fa-2x" style={{ color: '#0b75e0' }} />
+            <i className="fas fa-file-code fa-2x" style={{ color: '#18C6DB' }} />
             <p>add codeblock</p>
           </div>
         </div>
@@ -117,8 +117,9 @@ function mapStateToProps(state) {
     navigation: state.pagesReducer.navigation,
     selectedPage: state.pagesReducer.selectedPage,
     lastUpdatedBy: state.pagesReducer.lastUpdatedBy,
+    editsMade: state.pagesReducer.editsMade,
     selectedComponent: state.pagesReducer.selectedComponent
   };
 }
 
-export default connect(mapStateToProps, { updatePageComponent, editsMade, addComponent, deleteComponent, switchComponents })(Preview);
+export default connect(mapStateToProps, { updatePageComponent, isEdited, addComponent, deleteComponent, switchComponents })(Preview);
