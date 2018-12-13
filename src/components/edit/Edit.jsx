@@ -91,13 +91,10 @@ class Edit extends Component {
 
   toggleSideBar = () => {
     const { isOpen } = this.state;
-    console.log('toggle');
     if (isOpen) {
-      console.log('open', isOpen);
       document.getElementsByClassName('sidebar')[0].style.width = '0';
       document.getElementsByClassName('main-page')[0].style.left = '0';
     } else {
-      console.log('closed', isOpen);
       document.getElementsByClassName('sidebar')[0].style.width = '19rem';
       document.getElementsByClassName('main-page')[0].style.left = '19rem';
     }
