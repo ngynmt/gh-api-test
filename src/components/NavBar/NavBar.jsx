@@ -88,6 +88,7 @@ class NavBar extends Component {
   }
 
   discardChanges = () => {
+    // overwrites existing changes on current page and pushes next page selection
     const { props } = this;
     const { section, pageIdx, idx } = this.state;
     props.updatePageSelected(section, section.pages[pageIdx], pageIdx, idx);
