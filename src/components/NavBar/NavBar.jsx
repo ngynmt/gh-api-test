@@ -8,6 +8,7 @@ import CreateSectionModal from './components/CreateSectionModal';
 import CreatePageModal from './components/CreatePageModal';
 
 import { updatePageSelected } from '../../actions/editActions';
+import Logo from '../../assets/Logo';
 
 class NavBar extends Component {
   constructor(props) {
@@ -79,7 +80,7 @@ class NavBar extends Component {
 
         const newPage = (
           <div key={`page-${section.pages.length}`}>
-            <span className="add-new-button" style={{ color: 'green', cursor: 'pointer' }} onClick={() => this.openModal('add page', section, section.pages.length, idx)} onKeyPress={() => this.openModal('add page', section)}>
+            <span className="add-new-button" style={{ color: '#37EFBA', cursor: 'pointer' }} onClick={() => this.openModal('add page', section, section.pages.length, idx)} onKeyPress={() => this.openModal('add page', section)}>
               + Add A Page
             </span>
             <br />
@@ -100,9 +101,9 @@ class NavBar extends Component {
       })
     );
 
-    accordionList.unshift(
+    accordionList.push(
       <Accordion.Title
-        style={{ color: 'green', cursor: 'pointer' }}
+        style={{ color: '#37EFBA', cursor: 'pointer' }}
         content="+ Add A Section"
         index="section-x"
         onClick={() => this.openModal('add section')}
@@ -111,7 +112,7 @@ class NavBar extends Component {
 
     return (
       <div className="sidebar">
-        <div className="close" onClick={this.collapseNav} onKeyPress={this.collapseNav} style={{ top: '0', right: '15px' }} />
+        <Logo style={{ margin: '0px auto', height: '2.5rem' }} />
         <Accordion>
           {accordionList}
         </Accordion>
