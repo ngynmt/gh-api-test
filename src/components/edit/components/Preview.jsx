@@ -7,7 +7,7 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import python from 'highlight.js/lib/languages/python';
 import ruby from 'highlight.js/lib/languages/ruby';
 import php from 'highlight.js/lib/languages/php';
-import { updatePageComponent, isEdited, addComponent, deleteComponent, deletePage, switchComponents } from '../../../actions/editActions';
+import { updatePageComponent, isEdited, addComponent, updatePageTitle, deleteComponent, deletePage, switchComponents } from '../../../actions/editActions';
 import CodeBlock from './CodeBlock';
 import Modal from '../../common/Modal';
 import PrimaryButton from '../../common/PrimaryButton';
@@ -31,10 +31,8 @@ class Preview extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    const { selectedComponent, lastUpdatedBy } = this.props;
-    if (lastUpdatedBy === 'EDITOR' && selectedComponent.type === 'CODEBLOCK' && prevProps.selectedComponent.content !== selectedComponent.content) {
-      // this.forceUpdate();
-    }
+    const { selectedPage } = this.props;
+    if (prevProps.selectedPage.title !== selectedPage.title) this.setState({ updatedPageTitle: selectedPage.title });
   }
 
   initializeHighlightJS = (node) => {
@@ -123,7 +121,7 @@ class Preview extends Component {
         <Input
           containerClass="transfer-modal-memo"
           labelTxt="Page Title"
-          defaultValue={selectedPage.title}
+          defaultValue={updatedPageTitle}
           onChange={e => this.setState({ updatedPageTitle: e.target.value })}
           onSubmit={updatedPageTitle.replace(/\s/g, '').length === 0 ? null : this.updatePageTitle}
         />
@@ -173,10 +171,10 @@ class Preview extends Component {
   updatePageTitle = (e) => {
     const { updatedPageTitle } = this.state;
     const { selectedPage } = this.props;
+    const { props } = this;
     e.preventDefault();
     if (updatedPageTitle !== selectedPage.title) {
-      // TODO
-      console.log('update page');
+      props.updatePageTitle(updatedPageTitle);
     }
     this.setState({ modalOpen: false });
   }
@@ -228,4 +226,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updatePageComponent, isEdited, addComponent, deleteComponent, deletePage, switchComponents })(Preview);
+export default connect(mapStateToProps, { updatePageComponent, isEdited, addComponent, updatePageTitle, deleteComponent, deletePage, switchComponents })(Preview);

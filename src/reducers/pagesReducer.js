@@ -59,6 +59,15 @@ export default (state = initialState, action) => {
         ],
         editsMade: false
       };
+    case UPDATE_PAGE_TITLE:
+      newNav = _.cloneDeep(state.navigation);
+      newNav[state.selectedHeaderIndex].pages[state.selectedPageIndex].title = action.payload;
+      newPageSelected = newNav[state.selectedHeaderIndex].pages[state.selectedPageIndex];
+      return {
+        ...state,
+        navigation: newNav,
+        pageSelected: newPageSelected
+      };
     case UPDATE_PAGE_SELECTED:
       return {
         ...state,
