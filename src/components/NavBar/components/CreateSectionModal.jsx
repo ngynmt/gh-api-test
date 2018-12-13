@@ -32,7 +32,7 @@ class CreateSectionModal extends Component {
     };
 
     props.createSection(section, page); // create section and page
-    props.updatePageSelected(section, page); // show created page in editor
+    props.updatePageSelected(section, page, 0, props.navigation.length); // show created page in editor
     props.closeModal();
   }
 
@@ -67,7 +67,7 @@ class CreateSectionModal extends Component {
 
 function mapStateToProps(state) {
   return {
-
+    navigation: state.pagesReducer.navigation,
   };
 }
 
