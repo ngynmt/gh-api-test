@@ -71,28 +71,34 @@ class EditorContainer extends Component {
     let selectionRows;
     switch (type) {
       case 'HEADING':
+        // add # to beginning of line to create header
         selectionRow = editor.getCursorPosition().row;
         editor.session.insert({ row: selectionRow, column: 0 }, '# ');
         break;
       case 'BOLD':
+        // adds ** around selected text to bold
         editor.session.insert(editor.getSelectionRange().start, '**');
         editor.session.insert(editor.getSelectionRange().end, '**');
         break;
       case 'ITALIC':
+        // adds _ around selected text to italicize
         editor.session.insert(editor.getSelectionRange().start, '_');
         editor.session.insert(editor.getSelectionRange().end, '_');
         break;
       case 'CODE':
+        // adds ` around selected text to create code snippet
         editor.session.insert(editor.getSelectionRange().start, '`');
         editor.session.insert(editor.getSelectionRange().end, '`');
         break;
       case 'BLOCKQUOTE':
+        // adds > to beginning of every line selected to create blockquote
         selectionRows = [editor.getSelectionRange().start.row, editor.getSelectionRange().end.row];
         for (let i = selectionRows[0]; i < selectionRows[1]; i++) {
           editor.session.insert({ row: i, column: 0 }, '> ');
         }
         break;
       case 'QUESTION':
+        // opens link to markdown cheatsheet in new window
         window.open('https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet');
         break;
       default:

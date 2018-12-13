@@ -18,6 +18,7 @@ class Preview extends Component {
 
   componentDidMount = () => {
     const { selectedPage } = this.props;
+    // select first component on page to view in editor by default
     this.updateComponentToEdit(0, selectedPage.components[0]);
   }
 

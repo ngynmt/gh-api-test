@@ -4,6 +4,7 @@ import {
 } from '../constants/actionConstants';
 import navigation from '../data/mainList';
 
+// moving everything here to pageReducer to have one source of truth
 const initialState = {
   navigation,
   selectedPage: null,
