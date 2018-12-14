@@ -20,6 +20,7 @@ class NavBar extends Component {
       modalType: null,
       section: null,
       activeIndex: 0,
+      next: false
     };
   }
 
@@ -36,13 +37,14 @@ class NavBar extends Component {
     document.getElementsByClassName('sidebar')[0].style.width = '0';
   }
 
-  openModal = (modalType, section, pageIdx, idx) => {
+  openModal = (modalType, section, pageIdx, idx, next) => {
     this.setState({
       modalOpen: true,
       modalType,
       section,
       pageIdx,
-      idx
+      idx,
+      next
     });
   }
 
@@ -76,11 +78,12 @@ class NavBar extends Component {
             <div className="create-page-modal-buttons">
               <SecondaryButton
                 txt="Cancel"
+                type="button"
                 onClick={() => this.closeModal()}
               />
               <PrimaryButton
                 txt="Yes, discard changes"
-                onClick={() => this.discardChanges()}
+                onClick={e => this.discardChanges(e)}
               />
             </div>
           </div>
@@ -90,12 +93,12 @@ class NavBar extends Component {
     }
   }
 
-  discardChanges = () => {
+  discardChanges = (e) => {
     // overwrites existing changes on current page and pushes next page selection
     const { props } = this;
-    const { section, pageIdx, idx } = this.state;
-    props.updatePageSelected(section, section.pages[pageIdx], pageIdx, idx);
-    this.setState({ modalOpen: false });
+    const { section, pageIdx, idx, next } = this.state;
+    e.preventDefault();
+    next ? this.openModal(next, section, pageIdx, idx, false) : this.setState({ modalOpen: false }, () => props.updatePageSelected(section, section.pages[pageIdx], pageIdx, idx));
   }
 
   render() {
@@ -117,7 +120,7 @@ class NavBar extends Component {
 
         const newPage = (
           <div key={`page-${section.pages.length}`}>
-            <span className="add-new-button" style={{ color: '#37EFBA', cursor: 'pointer' }} onClick={() => this.openModal('ADD_PAGE', section, section.pages.length, idx)} onKeyPress={() => this.openModal('ADD_PAGE', section)}>
+            <span className="add-new-button" style={{ color: '#37EFBA', cursor: 'pointer' }} onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, 'ADD_PAGE') : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)} onKeyPress={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, true) : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)}>
               + Add A Page
             </span>
             <br />
@@ -151,7 +154,7 @@ class NavBar extends Component {
     //     style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial' }}
     //     content="+ Add A Section"
     //     index="section-x"
-    //     onClick={() => this.openModal('ADD_SECTION')}
+    // onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', null, null, null, 'ADD_SECTION') : () => this.openModal('ADD_SECTION')}
     //   />
     // );
 

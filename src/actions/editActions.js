@@ -7,23 +7,15 @@ import {
   UPDATE_PAGE_COMPONENT,
   UPDATE_PAGE_SELECTED,
   SAVE_CHANGES,
-  UPDATED_BY,
-  EDITS_MADE,
   ADD_COMPONENT,
   DELETE_COMPONENT,
+  DELETE_PAGE,
+  UPDATE_PAGE_TITLE,
   SWITCH_SECTIONS,
   SWITCH_PAGES,
   SWITCH_COMPONENTS,
   UPDATE_COMPONENT_CONTENT
 } from '../constants/actionConstants';
-
-export function isEdited(boolean) {
-  // set to true if changes were made
-  return ({
-    type: EDITS_MADE,
-    payload: boolean
-  });
-}
 
 export function addComponent(component) {
   // add codeblock or markdown component to page
@@ -174,10 +166,15 @@ export function saveChanges(page) {
   });
 }
 
-// export function updatedBy(type) {
-//   // save changes to main list
-//   return ({
-//     type: UPDATED_BY,
-//     payload: type
-//   });
-// }
+export function deletePage() {
+  return ({
+    type: DELETE_PAGE
+  });
+}
+
+export function updatePageTitle(title) {
+  return ({
+    type: UPDATE_PAGE_TITLE,
+    payload: title
+  });
+}
