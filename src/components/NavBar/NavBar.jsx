@@ -120,7 +120,7 @@ class NavBar extends Component {
 
         const newPage = (
           <div key={`page-${section.pages.length}`}>
-            <span className="add-new-button" style={{ color: '#37EFBA', cursor: 'pointer' }} onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, 'ADD_PAGE') : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)} onKeyPress={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, true) : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)}>
+            <span className="add-new-button add-section-button" style={{ color: '#37EFBA', cursor: 'pointer' }} onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, 'ADD_PAGE') : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)} onKeyPress={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, true) : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)}>
               + Add A Page
             </span>
             <br />
@@ -149,14 +149,15 @@ class NavBar extends Component {
       })
     );
 
-    // accordionList.push(
-    //   <Accordion.Title
-    //     style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial' }}
-    //     content="+ Add A Section"
-    //     index="section-x"
-    // onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', null, null, null, 'ADD_SECTION') : () => this.openModal('ADD_SECTION')}
-    //   />
-    // );
+    accordionList.push(
+      <Accordion.Title
+        style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial', justifyContent: 'normal' }}
+        className="add-section-button"
+        content="+ Add A Section"
+        index="section-x"
+        onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', null, null, null, 'ADD_SECTION') : () => this.openModal('ADD_SECTION')}
+      />
+    );
 
     return (
       <div className="sidebar">

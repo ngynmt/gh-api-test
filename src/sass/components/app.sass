@@ -19,9 +19,38 @@ body
   line-height: 1
   margin: 0
   font-family: Khula
+  // -webkit-scrollbar: width: 0 !important
+  // -webkit-scrollbar-track: background: white !important
+  &::-webkit-scrollbar
+    width: 0 !important
+  &::-webkit-scrollbar-thumb
+    background: white !important
+  &::-webkit-scrollbar-track
+    background: white !important
+  &::scrollbar
+    width: 0 !important
+  &::scrollbar-thumb
+    background: white !important
+  &::scrollbar-track
+    background: white !important
+button
+  font-size: 80% !important
 button, a
   cursor: pointer
   outline: none !important
+div
+  &::-webkit-scrollbar
+    width: 0 !important
+  &::-webkit-scrollbar-thumb
+    background: white !important
+  &::-webkit-scrollbar-track
+    background: white !important
+  &::scrollbar
+    width: 0 !important
+  &::scrollbar-thumb
+    background: white !important
+  &::scrollbar-track
+    background: white !important
 
 .main-container
   width: 100%
