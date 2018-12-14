@@ -22,6 +22,8 @@
   .accordion
     padding: 20px 0 40px 30px
   .title
+    display: flex
+    justify-content: space-between
     color: white
     font-size: .8rem
     letter-spacing: 1px
@@ -29,6 +31,28 @@
     text-transform: uppercase
     pointer-events: none
     margin-top: 10px
+    // &:hover
+    //   .component-buttons
+    //     opacity: 1
+  .page
+    display: flex
+    justify-content: space-between
+    &:hover
+      .component-buttons
+        opacity: 1
+  .component-buttons
+    display: flex
+    align-items: center
+    justify-content: space-around
+    width: 20%
+    opacity: 0
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1)
+  .action-arrow
+    padding: rem-calc(2px) rem-calc(1px) rem-calc(3px)
+    border: none
+    background: none
+    font-size: 1.2rem
+    color: #18C6DB
   .add-new-button
     font-size: .8rem
     letter-spacing: 1px

@@ -7,7 +7,7 @@ import Modal from '../common/Modal';
 import CreateSectionModal from './components/CreateSectionModal';
 import CreatePageModal from './components/CreatePageModal';
 
-import { updatePageSelected } from '../../actions/editActions';
+import { updatePageSelected, switchSections, switchPages } from '../../actions/editActions';
 import Logo from '../../assets/Logo';
 import SecondaryButton from '../common/SecondaryButton';
 import PrimaryButton from '../common/PrimaryButton';
@@ -23,10 +23,13 @@ class NavBar extends Component {
     };
   }
 
-  handleClick = ({ index }) => {
+  handleClick = (e, titleProps) => {
+    // const { props } = this;
+    const { index, subItem, section } = titleProps;
     const { activeIndex } = this.state;
     const newIndex = activeIndex === index ? -1 : index;
     this.setState({ activeIndex: newIndex });
+    // props.updatePageSelected(section, subItem, 0, 0);
   }
 
   collapseNav = () => {
@@ -101,11 +104,14 @@ class NavBar extends Component {
     const accordionList = (
       navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
         const pages = section.pages.map((page, pageIdx) => (
-          <div key={`page-${pageIdx}`}>
+          <div className="page" key={`page-${pageIdx}`}>
             <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', section, pageIdx, idx) : () => props.updatePageSelected(section, page, pageIdx, idx)} onKeyPress={editsMade ? () => this.openModal('ARE_YOU_SURE') : () => props.updatePageSelected(section, page, pageIdx, idx)}>
               {page.title}
             </span>
-            <br />
+            <div className="component-buttons">
+              {pageIdx !== 0 ? <button className="action-arrow" type="button" onClick={() => props.switchPages(idx, pageIdx, pageIdx - 1)}>&#8593;</button> : null}
+              {pageIdx !== section.pages.length - 1 ? <button className="action-arrow" type="button" onClick={() => props.switchPages(idx, pageIdx, pageIdx + 1)}>&#8595;</button> : null}
+            </div>
           </div>
         ));
 
@@ -117,29 +123,37 @@ class NavBar extends Component {
             <br />
           </div>
         );
-        pages.push(newPage);
-        return [
-          <Accordion.Title
-            active={activeIndex === idx}
-            content={section.header}
-            subItem={section.pages[0]}
-            index={idx}
-            onClick={this.handleClick}
-            icon="dropdown"
-          />,
-          <Accordion.Content active={activeIndex === idx} content={pages} />
-        ];
+        // pages.push(newPage);
+        return (
+          <div className="section" key={`section${idx}`}>
+            <Accordion.Title
+              active={activeIndex === idx}
+              // content={section.header}
+              subItem={section.pages[0]}
+              index={idx}
+              onClick={this.handleClick}
+            // icon="dropdown"
+            >
+              {section.header}
+              <div className="component-buttons">
+                {idx !== 0 ? <button className="action-arrow" type="button" onClick={() => console.log('hell')}>&#8593;</button> : null}
+                {idx !== section.pages.length - 1 ? <button className="action-arrow" type="button" onClick={() => props.switchSections(idx, idx + 1)}>&#8595;</button> : null}
+              </div>
+            </Accordion.Title>
+            <Accordion.Content active={activeIndex === idx} content={pages} />
+          </div>
+        );
       })
     );
 
-    accordionList.push(
-      <Accordion.Title
-        style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial' }}
-        content="+ Add A Section"
-        index="section-x"
-        onClick={() => this.openModal('ADD_SECTION')}
-      />
-    );
+    // accordionList.push(
+    //   <Accordion.Title
+    //     style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial' }}
+    //     content="+ Add A Section"
+    //     index="section-x"
+    //     onClick={() => this.openModal('ADD_SECTION')}
+    //   />
+    // );
 
     return (
       <div className="sidebar">
@@ -161,4 +175,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updatePageSelected })(NavBar);
+export default connect(mapStateToProps, { updatePageSelected, switchSections, switchPages })(NavBar);

@@ -13,6 +13,8 @@ import {
   EDITS_MADE,
   ADD_COMPONENT,
   DELETE_COMPONENT,
+  SWITCH_SECTIONS,
+  SWITCH_PAGES,
   SWITCH_COMPONENTS,
   CREATE_SECTION,
   CREATE_PAGE
@@ -38,6 +40,7 @@ export default (state = initialState, action) => {
   let results;
   let first;
   let newNav;
+  let pages;
   switch (action.type) {
     case EDITS_MADE:
       return {
@@ -105,6 +108,28 @@ export default (state = initialState, action) => {
             ...state.selectedPage.components.slice(action.payload + 1)
           ]
         },
+        editsMade: true
+      };
+    case SWITCH_SECTIONS:
+      newNav = _.cloneDeep(state.navigation);
+      first = newNav[action.payload.firstIdx];
+      newNav[action.payload.firstIdx] = newNav[action.payload.secondIdx];
+      newNav[action.payload.secondIdx] = first;
+      return {
+        ...state,
+        navigation: newNav,
+        editsMade: true
+      };
+    case SWITCH_PAGES:
+      newNav = _.cloneDeep(state.navigation);
+      pages = _.cloneDeep(newNav[action.payload.section].pages);
+      first = pages[action.payload.firstIdx];
+      pages[action.payload.firstIdx] = pages[action.payload.secondIdx];
+      pages[action.payload.secondIdx] = first;
+      newNav[action.payload.section].pages = pages;
+      return {
+        ...state,
+        navigation: newNav,
         editsMade: true
       };
     case SWITCH_COMPONENTS:
