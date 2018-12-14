@@ -27,12 +27,19 @@ class EditorContainer extends Component {
 
   componentDidUpdate = (prevProps) => {
     const { selectedComponent, lastUpdatedBy } = this.props;
+    let editor;
     if (prevProps.selectedComponent !== selectedComponent) {
-      // import selected component information only when coming from preview for markdown components
-      lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: selectedComponent.content }) : null;
-      // lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN' ? this.setState({ value: Plain.deserialize(selectedComponent.content) }) : null;
-      // update when tabs are added/removed/modified
-      selectedComponent.type === 'CODEBLOCK' ? this.setState({ tabs: selectedComponent }) : null;
+      if (lastUpdatedBy !== 'EDITOR' && selectedComponent.type === 'MARKDOWN') {
+        // import selected component information only when coming from preview for markdown components
+        this.setState({ value: selectedComponent.content });
+        // attempt to reset undo stack (doesn't work... yet)
+        editor = this.refs.reactAceComponent.editor;
+        editor.getSession().getUndoManager().reset();
+        editor.getSession().getUndoManager().$undoStack = [];
+      } else if (selectedComponent.type === 'CODEBLOCK') {
+        // update when tabs are added/removed/modified
+        this.setState({ tabs: selectedComponent });
+      }
     }
   }
 

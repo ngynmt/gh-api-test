@@ -21,7 +21,8 @@ class CreatePageModal extends Component {
     };
   }
 
-  createPage = () => {
+  createPage = (e) => {
+    e.preventDefault();
     const { state: { section, title, pageIdx, idx }, props } = this;
     const page = {
       title,
@@ -35,20 +36,24 @@ class CreatePageModal extends Component {
 
   render() {
     const { closeModal } = this.props;
+    const { title } = this.state;
     return (
       <div className="transfer-modal-container">
         <Input
           containerClass="transfer-modal-memo"
           placeHolder="Title of Page (Ex: API Initialization)"
-          onChange={e => this.setState({ title: (e.target.value) })}
+          onChange={e => this.setState({ title: e.target.value })}
+          onSubmit={title.replace(/\s/g, '').length === 0 ? null : this.createPage}
         />
         <div className="create-page-modal-buttons">
           <SecondaryButton
+            type="button"
             txt="Cancel"
             onClick={closeModal}
           />
           <PrimaryButton
             txt="Create Page"
+            disabled={title.replace(/\s/g, '').length === 0}
             onClick={this.createPage}
           />
         </div>

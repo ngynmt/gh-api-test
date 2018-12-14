@@ -6,6 +6,7 @@ const PrimaryButton = ({ className, style, onClick, txt, loading, type, disabled
     type={type || 'submit'}
     className={`primary-button  ${loading ? 'loading' : ''} ${disabled ? 'disabled' : ''} ${className}`}
     style={style}
+    disabled={disabled}
     onClick={onClick}
   >
     {txt}
