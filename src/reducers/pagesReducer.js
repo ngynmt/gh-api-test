@@ -14,6 +14,8 @@ import {
   DELETE_COMPONENT,
   DELETE_PAGE,
   UPDATE_PAGE_TITLE,
+  SWITCH_SECTIONS,
+  SWITCH_PAGES,
   SWITCH_COMPONENTS,
   CREATE_SECTION,
   CREATE_PAGE
@@ -40,6 +42,7 @@ export default (state = initialState, action) => {
   let first;
   let firstComponent;
   let newNav;
+  let pages;
   let newPageSelected;
   switch (action.type) {
     case SAVE_CHANGES:
@@ -107,6 +110,28 @@ export default (state = initialState, action) => {
             ...state.selectedPage.components.slice(action.payload + 1)
           ]
         },
+        editsMade: true
+      };
+    case SWITCH_SECTIONS:
+      newNav = _.cloneDeep(state.navigation);
+      first = newNav[action.payload.firstIdx];
+      newNav[action.payload.firstIdx] = newNav[action.payload.secondIdx];
+      newNav[action.payload.secondIdx] = first;
+      return {
+        ...state,
+        navigation: newNav,
+        editsMade: true
+      };
+    case SWITCH_PAGES:
+      newNav = _.cloneDeep(state.navigation);
+      pages = _.cloneDeep(newNav[action.payload.section].pages);
+      first = pages[action.payload.firstIdx];
+      pages[action.payload.firstIdx] = pages[action.payload.secondIdx];
+      pages[action.payload.secondIdx] = first;
+      newNav[action.payload.section].pages = pages;
+      return {
+        ...state,
+        navigation: newNav,
         editsMade: true
       };
     case SWITCH_COMPONENTS:

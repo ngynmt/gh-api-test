@@ -11,6 +11,8 @@ import {
   DELETE_COMPONENT,
   DELETE_PAGE,
   UPDATE_PAGE_TITLE,
+  SWITCH_SECTIONS,
+  SWITCH_PAGES,
   SWITCH_COMPONENTS,
   UPDATE_COMPONENT_CONTENT
 } from '../constants/actionConstants';
@@ -28,6 +30,27 @@ export function deleteComponent(index) {
   return ({
     type: DELETE_COMPONENT,
     payload: index
+  });
+}
+
+export function switchSections(firstIdx, secondIdx) {
+  return ({
+    type: SWITCH_SECTIONS,
+    payload: {
+      firstIdx,
+      secondIdx
+    }
+  });
+}
+
+export function switchPages(section, firstIdx, secondIdx) {
+  return ({
+    type: SWITCH_PAGES,
+    payload: {
+      section,
+      firstIdx,
+      secondIdx
+    }
   });
 }
 
