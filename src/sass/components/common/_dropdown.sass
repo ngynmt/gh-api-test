@@ -1,0 +1,36 @@
+.drop-down
+  width: rem-calc(412px)
+  height: 3rem
+  border-color: transparent !important
+  background-color: #fafafa !important
+  font-size: 1rem !important
+  display: flex !important
+  align-items: center
+  border-radius: 1px !important
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important
+  &:hover
+    background-color: #ffffff !important
+    border-bottom: 1px solid #E6E6E6 !important  
+    box-shadow: 0 1px 4px 0 rgba(166, 166, 166, 0.5) !important
+    .dropdown-triangle
+      fill: #000000
+  &:focus
+    outline: none
+  &:placeholder
+    font-size: 14px
+.ui.dropdown .menu
+  border: none !important
+.drop-down.active
+  .dropdown-triangle
+    fill: #000000
+  .rotate-arrow
+    transform: rotate(-180deg)
+    transition: transform .5s
+
+.rotate-arrow
+  margin-left: auto
+  transform: rotate(0deg)
+  transition: transform .5s
+
+.ui.selection.dropdown
+  padding-right: 1.275em
