@@ -21,25 +21,21 @@
   transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1)
   .accordion
     padding: 20px 0 40px 30px
-    .add-section-button
-      color: #37EFBA !important
-      .icon
-        display: none !important
-      // .ui-accordion-header a
-      //   padding-left: 0 !important
-  .title
-    display: flex
-    justify-content: space-between
-    color: white !important
-    font-size: .8rem !important
-    letter-spacing: 1px
-    font-weight: bold
-    text-transform: uppercase
-    // pointer-events: none
-    margin-top: 10px
-    // &:hover
-    //   .component-buttons
-    //     opacity: 1
+    .section
+      .title
+        display: flex
+        justify-content: space-between
+        color: white
+        font-size: .8rem
+        font-family: Roboto
+        padding: 0
+        letter-spacing: 1px
+        font-weight: bold
+        text-transform: uppercase
+        margin-top: 10px
+        &:hover
+          .component-buttons
+            opacity: 1
   .page
     display: flex
     justify-content: space-between
@@ -57,13 +53,8 @@
     padding: rem-calc(2px) rem-calc(1px) rem-calc(3px)
     border: none
     background: none
-    font-size: 1.2rem
+    font-size: 1.2rem !important
     color: #18C6DB
-  .add-new-button
-    font-size: .8rem
-    letter-spacing: 1px
-    font-weight: bold
-    text-transform: uppercase
   .header-container
     display: flex
     align-items: baseline
@@ -85,6 +76,18 @@
         color: white
         cursor: pointer
 
+.add-section-button
+  color: #37EFBA !important
+
+.add-new-button
+  font-size: 1rem !important
+  margin-bottom: 2rem
+  color: gray
+  background: none
+  border: none
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1)
+  &:hover
+    color: #37EFBA
 
 .activeSubItem
   color: #18C6DB !important

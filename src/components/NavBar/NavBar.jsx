@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Accordion } from 'semantic-ui-react';
+import { Accordion, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import Modal from '../common/Modal';
-import CreateSectionModal from './components/CreateSectionModal';
+import CreateModal from './components/CreateModal';
 import CreatePageModal from './components/CreatePageModal';
 
 import { updatePageSelected, switchSections, switchPages } from '../../actions/editActions';
@@ -58,7 +58,7 @@ class NavBar extends Component {
   renderModal = () => (
     <Modal
       closeModal={this.closeModal}
-      modalStyle={{ height: 'fit-content', padding: '2.5rem 3rem', maxWidth: '640px', maxHeight: '23.5rem' }}
+      modalStyle={{ padding: '4.5rem 3rem', width: '40rem', height: '23.5rem', maxWidth: '40rem', maxHeight: '23.5rem' }}
     >
       {this.renderModalContent()}
     </Modal>
@@ -66,11 +66,12 @@ class NavBar extends Component {
 
   renderModalContent = () => {
     const { modalType, section, pageIdx, idx } = this.state;
+    const { navigation } = this.props;
     switch (modalType) {
       case 'ADD_PAGE':
         return <CreatePageModal section={section} pageIdx={pageIdx} idx={idx} closeModal={() => this.closeModal()} />;
-      case 'ADD_SECTION':
-        return <CreateSectionModal closeModal={() => this.closeModal()} />;
+      case 'CREATE_MODAL':
+        return <CreateModal navigation={navigation} closeModal={() => this.closeModal()} />;
       case 'ARE_YOU_SURE':
         return (
           <div style={{ width: '25.75rem' }}>
@@ -118,15 +119,6 @@ class NavBar extends Component {
           </div>
         ));
 
-        const newPage = (
-          <div key={`page-${section.pages.length}`}>
-            <span className="add-new-button add-section-button" style={{ color: '#37EFBA', cursor: 'pointer' }} onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, 'ADD_PAGE') : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)} onKeyPress={editsMade ? () => this.openModal('ARE_YOU_SURE', section, section.pages.length, idx, true) : () => this.openModal('ADD_PAGE', section, section.pages.length, idx)}>
-              + Add A Page
-            </span>
-            <br />
-          </div>
-        );
-        // pages.push(newPage);
         return (
           <div className="section" key={`section${idx}`}>
             <Accordion.Title
@@ -135,13 +127,16 @@ class NavBar extends Component {
               subItem={section.pages[0]}
               index={idx}
               onClick={this.handleClick}
-            // icon="dropdown"
             >
-              {section.header}
-              <div className="component-buttons">
-                {idx !== 0 ? <button className="action-arrow" type="button" onClick={() => console.log('hell')}>&#8593;</button> : null}
+              <span style={{ display: 'flex' }}>
+                <Icon style={{ paddingTop: '5px' }} name="dropdown" />
+                <span>{section.header}</span>
+              </span>
+              <span className="component-buttons">
+                {idx !== 0 ? <button className="action-arrow" type="button" onClick={() => props.switchSections(idx, idx - 1)}>&#8593;</button> : null}
                 {idx !== section.pages.length - 1 ? <button className="action-arrow" type="button" onClick={() => props.switchSections(idx, idx + 1)}>&#8595;</button> : null}
-              </div>
+                <button type="button" className="action-arrow"> <i className="fa fa-edit" /></button>
+              </span>
             </Accordion.Title>
             <Accordion.Content active={activeIndex === idx} content={pages} />
           </div>
@@ -151,12 +146,15 @@ class NavBar extends Component {
 
     accordionList.push(
       <Accordion.Title
-        style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial', justifyContent: 'normal' }}
+        key="section-x"
         className="add-section-button"
-        content="+ Add A Section"
+        // content="+ New Section/Page"
         index="section-x"
-        onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', null, null, null, 'ADD_SECTION') : () => this.openModal('ADD_SECTION')}
-      />
+        onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', null, null, null, 'CREATE_MODAL') : () => this.openModal('CREATE_MODAL')}
+      >
+        <Icon name="blind" />
+        New Section/Page
+      </Accordion.Title>
     );
 
     return (
