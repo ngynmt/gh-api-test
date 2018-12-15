@@ -10,6 +10,7 @@ import {
   ADD_COMPONENT,
   DELETE_COMPONENT,
   DELETE_PAGE,
+  UPDATE_SECTION_HEADER,
   UPDATE_PAGE_TITLE,
   SWITCH_SECTIONS,
   SWITCH_PAGES,
@@ -169,6 +170,16 @@ export function saveChanges(page) {
 export function deletePage() {
   return ({
     type: DELETE_PAGE
+  });
+}
+
+export function updateSectionHeader(header, idx) {
+  return ({
+    type: UPDATE_SECTION_HEADER,
+    payload: {
+      header,
+      idx
+    }
   });
 }
 
