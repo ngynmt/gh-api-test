@@ -13,6 +13,7 @@ import {
   ADD_COMPONENT,
   DELETE_COMPONENT,
   DELETE_PAGE,
+  UPDATE_SECTION_HEADER,
   UPDATE_PAGE_TITLE,
   SWITCH_SECTIONS,
   SWITCH_PAGES,
@@ -61,6 +62,13 @@ export default (state = initialState, action) => {
           ...state.navigation.slice(state.selectedHeaderIndex + 1)
         ],
         editsMade: false
+      };
+    case UPDATE_SECTION_HEADER:
+      newNav = _.cloneDeep(state.navigation);
+      newNav[action.payload.idx].header = action.payload.header;
+      return {
+        ...state,
+        navigation: newNav,
       };
     case UPDATE_PAGE_TITLE:
       newNav = _.cloneDeep(state.navigation);
