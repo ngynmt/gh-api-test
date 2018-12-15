@@ -147,7 +147,7 @@ class NavBar extends Component {
     accordionList.push(
       <Accordion.Title
         key="section-x"
-        style={{ color: '#37EFBA', cursor: 'pointer', pointerEvents: 'initial', justifyContent: 'normal' }}
+        className="add-section-button"
         // content="+ New Section/Page"
         index="section-x"
         onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', null, null, null, 'CREATE_MODAL') : () => this.openModal('CREATE_MODAL')}

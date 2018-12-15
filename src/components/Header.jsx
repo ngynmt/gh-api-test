@@ -24,7 +24,7 @@ const Header = ({ isOpen, toggleSideBar }) => {
         height: '2px',
         transition: 'all .3s',
         width: '20px',
-        top: '7px',
+        top: '-1px',
         display: 'block', //
         position: 'relative' //
       },
@@ -58,7 +58,7 @@ const Header = ({ isOpen, toggleSideBar }) => {
         height: '2px',
         transition: 'all .3s',
         width: '20px',
-        top: '7px',
+        top: '-1px',
         backgroundColor: '#d3daea',
         display: 'block', //
         position: 'relative' //
