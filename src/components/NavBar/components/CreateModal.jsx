@@ -113,7 +113,7 @@ class CreateSectionModal extends Component {
     const { title, header, renderComponents } = this.state;
 
     return (
-      <div className="transfer-modal-container">
+      <div className="transfer-modal-container" style={{ padding: '2rem 0' }}>
         <button className="add-new-button" type="button" onClick={() => this.setComponents('New Section')}>+ New Section</button>
         <button className="add-new-button" type="button" onClick={() => this.setComponents('New Page')}>+ New Page</button>
 

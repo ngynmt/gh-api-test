@@ -58,7 +58,7 @@ class NavBar extends Component {
   renderModal = () => (
     <Modal
       closeModal={this.closeModal}
-      modalStyle={{ padding: '4.5rem 3rem', width: '40rem', height: '23.5rem', maxWidth: '40rem', maxHeight: '23.5rem' }}
+      modalStyle={{ padding: '3rem' }}
     >
       {this.renderModalContent()}
     </Modal>
