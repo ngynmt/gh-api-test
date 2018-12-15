@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import Modal from '../common/Modal';
 import CreateModal from './components/CreateModal';
-import CreatePageModal from './components/CreatePageModal';
+import EditDeleteModal from './components/EditDeleteModal';
 
 import { updatePageSelected, switchSections, switchPages } from '../../actions/editActions';
 import Logo from '../../assets/Logo';
@@ -37,7 +37,7 @@ class NavBar extends Component {
     document.getElementsByClassName('sidebar')[0].style.width = '0';
   }
 
-  openModal = (modalType, section, pageIdx, idx, next) => {
+  openModal = (modalType, section, idx, pageIdx, next) => {
     this.setState({
       modalOpen: true,
       modalType,
@@ -65,11 +65,11 @@ class NavBar extends Component {
   );
 
   renderModalContent = () => {
-    const { modalType, section, pageIdx, idx } = this.state;
+    const { modalType, section, idx } = this.state;
     const { navigation } = this.props;
     switch (modalType) {
-      case 'ADD_PAGE':
-        return <CreatePageModal section={section} pageIdx={pageIdx} idx={idx} closeModal={() => this.closeModal()} />;
+      case 'EDIT_DELETE_MODAL':
+        return <EditDeleteModal section={section} idx={idx} closeModal={() => this.closeModal()} />;
       case 'CREATE_MODAL':
         return <CreateModal navigation={navigation} closeModal={() => this.closeModal()} />;
       case 'ARE_YOU_SURE':
@@ -97,9 +97,9 @@ class NavBar extends Component {
   discardChanges = (e) => {
     // overwrites existing changes on current page and pushes next page selection
     const { props } = this;
-    const { section, pageIdx, idx, next } = this.state;
+    const { section, idx, pageIdx, next } = this.state;
     e.preventDefault();
-    next ? this.openModal(next, section, pageIdx, idx, false) : this.setState({ modalOpen: false }, () => props.updatePageSelected(section, section.pages[pageIdx], pageIdx, idx));
+    next ? this.openModal(next, section, idx, pageIdx, false) : this.setState({ modalOpen: false }, () => props.updatePageSelected(section, section.pages[pageIdx], pageIdx, idx));
   }
 
   render() {
@@ -109,7 +109,7 @@ class NavBar extends Component {
       navigation.map((section, idx) => { // mapping through navBarItems to display headers and sublinks
         const pages = section.pages.map((page, pageIdx) => (
           <div className="page" key={`page-${pageIdx}`}>
-            <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', section, pageIdx, idx) : () => props.updatePageSelected(section, page, pageIdx, idx)} onKeyPress={editsMade ? () => this.openModal('ARE_YOU_SURE') : () => props.updatePageSelected(section, page, pageIdx, idx)}>
+            <span className={page.title === selectedPage.title ? 'activeSubItem' : 'subItem'} onClick={editsMade ? () => this.openModal('ARE_YOU_SURE', section, idx, pageIdx) : () => props.updatePageSelected(section, page, pageIdx, idx)} onKeyPress={editsMade ? () => this.openModal('ARE_YOU_SURE') : () => props.updatePageSelected(section, page, pageIdx, idx)}>
               {page.title}
             </span>
             <div className="component-buttons">
@@ -135,7 +135,7 @@ class NavBar extends Component {
               <span className="component-buttons">
                 {idx !== 0 ? <button className="action-arrow" type="button" onClick={() => props.switchSections(idx, idx - 1)}>&#8593;</button> : null}
                 {idx !== section.pages.length - 1 ? <button className="action-arrow" type="button" onClick={() => props.switchSections(idx, idx + 1)}>&#8595;</button> : null}
-                <button type="button" className="action-arrow"> <i className="fa fa-edit" /></button>
+                <button type="button" className="action-arrow" onClick={() => this.openModal('EDIT_DELETE_MODAL', section, idx)}> <i className="fa fa-edit" /></button>
               </span>
             </Accordion.Title>
             <Accordion.Content active={activeIndex === idx} content={pages} />
