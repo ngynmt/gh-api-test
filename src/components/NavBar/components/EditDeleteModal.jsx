@@ -57,6 +57,7 @@ class EditDeleteModal extends Component {
         </div>
         <PrimaryButton
           txt="Delete Page"
+          className="delete-button"
           type="button"
           style={{
             backgroundColor: '#ff5757',

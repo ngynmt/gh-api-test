@@ -140,6 +140,7 @@ class Preview extends Component {
         <PrimaryButton
           txt="Delete Page"
           type="button"
+          className="delete-button"
           style={{
             backgroundColor: '#ff5757',
             border: '1px solid #ff5757',

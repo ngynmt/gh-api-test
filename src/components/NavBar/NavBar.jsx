@@ -135,7 +135,7 @@ class NavBar extends Component {
               <span className="component-buttons">
                 {idx !== 0 ? <button className="action-arrow" type="button" onClick={() => props.switchSections(idx, idx - 1)}>&#8593;</button> : null}
                 {idx !== section.pages.length - 1 ? <button className="action-arrow" type="button" onClick={() => props.switchSections(idx, idx + 1)}>&#8595;</button> : null}
-                <button type="button" className="action-arrow" onClick={() => this.openModal('EDIT_DELETE_MODAL', section, idx)}> <i className="fa fa-edit" /></button>
+                <button type="button" style={{ paddingLeft: '5px' }} className="action-arrow" onClick={() => this.openModal('EDIT_DELETE_MODAL', section, idx)}> <i className="fa fa-edit" /></button>
               </span>
             </Accordion.Title>
             <Accordion.Content active={activeIndex === idx} content={pages} />

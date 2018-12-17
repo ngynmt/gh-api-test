@@ -113,12 +113,12 @@ class Edit extends Component {
   render() {
     const { props } = this;
     const { selectedItem, isOpen } = this.state;
-    const { editsMade, selectedPage } = this.props;
+    const { editsMade, selectedPage, history } = this.props;
     return (
       <div style={{ overflow: 'hidden' }}>
         <NavBar />
         <div className="main-page">
-          <Header className="header-content" toggleSideBar={() => this.toggleSideBar()} isOpen={isOpen} />
+          <Header className="header-content" toggleSideBar={() => this.toggleSideBar()} isOpen={isOpen} history={history} />
           <div className="content-container" onClick={() => this.closeSideBar()} onKeyPress={() => this.closeSideBar()}>
             {/* <button type="button" onClick={this.submitChanges}>Test Commit and PR</button> */}
             <div className="editor-wrapper">

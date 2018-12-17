@@ -17,7 +17,7 @@ class CreateSectionModal extends Component {
     this.state = {
       navigation: props.navigation,
       renderComponents: false,
-      type: null,
+      type: 'New Section',
       selected: null,
       header: '',
       title: '',
@@ -110,14 +110,14 @@ class CreateSectionModal extends Component {
 
   render() {
     const { closeModal } = this.props;
-    const { title, header, renderComponents } = this.state;
+    const { title, header, renderComponents, type } = this.state;
 
     return (
-      <div className="transfer-modal-container" style={{ padding: '2rem 0' }}>
-        <button className="add-new-button" type="button" onClick={() => this.setComponents('New Section')}>+ New Section</button>
-        <button className="add-new-button" type="button" onClick={() => this.setComponents('New Page')}>+ New Page</button>
+      <div className="transfer-modal-container">
+        <button className="add-new-button" type="button" onClick={() => this.setComponents('New Section')} style={type === 'New Section' ? { fontWeight: 'bold', color: '#37EFBA' } : {}}>+ New Section</button>
+        <button className="add-new-button" type="button" onClick={() => this.setComponents('New Page')} style={type === 'New Page' ? { fontWeight: 'bold', color: '#37EFBA' } : {}}>+ New Page</button>
 
-        {renderComponents && this.renderComponents()}
+        {this.renderComponents()}
 
         <div className="create-page-modal-buttons">
           <SecondaryButton
